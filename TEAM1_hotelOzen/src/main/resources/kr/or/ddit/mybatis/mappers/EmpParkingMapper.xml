@@ -6,13 +6,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND">
 		    <trim prefix="(" suffix=")" prefixOverrides="OR">
 		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
-		            OR PKG_NO LIKE '%${simpleCondition.searchWord}%'
-		        </if>
-		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
 		            OR PKG_CAR_NO LIKE '%${simpleCondition.searchWord}%'
-		        </if>
-		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
-		            OR PKG_AREA LIKE '%${simpleCondition.searchWord}%'
 		        </if>
 		    </trim>
 	    </trim>
@@ -32,17 +26,15 @@
 				ROWNUM RNUM, A.*    
 		    FROM (
 				SELECT 
-				    PKG_NO
-				    , PKG_CAR_NO
+				    PKG_CAR_NO
 				    , PKG_ENTVHCL_TIME
 				    , PKG_LVVHCL_TIME
 				    , PKG_STAY_YN
-				    , PKG_AREA
 				    , PKG_AMNT
 				FROM 
 				    TB_PARKING
-				<include refid="searchFrag" />    
-				ORDER BY PKG_NO DESC
+				<include refid="searchFrag" />  
+				ORDER BY PKG_ENTVHCL_TIME DESC
 			)A
 		)
 		SELECT *

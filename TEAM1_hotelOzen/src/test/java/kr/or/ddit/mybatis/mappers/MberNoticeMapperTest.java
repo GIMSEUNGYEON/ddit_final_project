@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import kr.or.ddit.AbstractRootContextTest;
+import kr.or.ddit.global.common.paging.PaginationInfo;
 import kr.or.ddit.global.vo.MberNoticeVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,13 +19,23 @@ class MberNoticeMapperTest extends AbstractRootContextTest{
 
 	@Test
 	void test() {
-//		List<MberNoticeVO> memNotice = dao.MberNoticeList();
-//		log.info("notice {}", memNotice);
+		PaginationInfo paging = new PaginationInfo();
+		int record =  dao.selectTotalRecord(paging);
+		paging.setCurrentPage(1);
+		
+		List<MberNoticeVO> memNotice = dao.selectList(paging);
+		log.info("notice {}", memNotice);
+		
+		dao.select("MNT0011");
 	}
 	
 	@Test
 	void testView() {
-//		MberNoticeVO mbernt = dao.MberNoticeView("NNT0011");
-//		log.info("mberNotice {}", mbernt);
+		MberNoticeVO notice = new MberNoticeVO();
+		notice.setEmpNo("E240002");
+		notice.setMberNtCn("asdfgsfds");
+		notice.setMberNtNm("awtf");;
+		notice.setMberNtCtgry("asdfgsfds");
+		int cnt = dao.insert(notice);
 	}
 }

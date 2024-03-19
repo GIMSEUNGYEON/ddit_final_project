@@ -43,6 +43,7 @@
 				FROM 
 					TB_ROOM
 				<include refid="searchFrag" />
+				ORDER BY RM_CLEAN DESC, RM_AVLBL_DETAILS DESC, TO_NUMBER(SUBSTR(RM_NO, 2))
 			)A
 		)
 		SELECT *
@@ -52,4 +53,63 @@
 		]]>
 	</select>
 
+	<select id="select" resultType="RoomVO" parameterType="String">
+		SELECT 
+		    RM_NO
+		    , RMT_TYPE_CD
+		    , RM_AVLBL_YN
+		    , RM_AVLBL_DETAILS
+		    , RM_CLEAN
+		FROM 
+			TB_ROOM
+		WHERE
+			RM_NO = #{rmNo}
+	</select>
+	
+	<update id="updateRoom" parameterType="String">
+		UPDATE 
+        	TB_ROOM 
+        SET 
+        	RM_AVLBL_YN = 'Y'
+        	, RM_AVLBL_DETAILS = '빈객실'
+        	, RM_CLEAN = '완료'
+        WHERE 
+        	RM_NO = #{rmNo}
+	</update>
+	
+	<select id="selectEmptyTotal" resultType="int">
+		SELECT 
+		    COUNT(*)
+		FROM 
+		    TB_ROOM
+		WHERE 
+		    RM_AVLBL_DETAILS = '빈객실'
+	</select>
+	
+	<select id="selectStayTotal" resultType="int">
+		SELECT 
+		    COUNT(*)
+		FROM 
+		    TB_ROOM
+		WHERE 
+		    RM_AVLBL_DETAILS = '투숙중'
+	</select>
+	
+	<select id="selectCleanTotal" resultType="int">
+		SELECT 
+		    COUNT(*)
+		FROM 
+		    TB_ROOM
+		WHERE 
+		    RM_AVLBL_DETAILS = '청소'
+	</select>
+	
+	<select id="selectBreakTotal" resultType="int">
+		SELECT 
+		    COUNT(*)
+		FROM 
+		    TB_ROOM
+		WHERE 
+		    RM_AVLBL_DETAILS = '고장'
+	</select>
 </mapper>

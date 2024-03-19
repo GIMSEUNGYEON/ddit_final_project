@@ -29,4 +29,10 @@
 		    , #{bgColor}
 		)
 	</insert>
+	
+	<delete id="deleteEmpSchdl" parameterType="EmpSchdlVO">
+		DELETE FROM
+		TB_EMP_SCHDL
+		WHERE EMP_NO =#{empNo} AND SCHDL_TITLE = #{schdlTitle}
+	</delete>
 </mapper>

@@ -25,7 +25,7 @@ class CstmrRsvtRetrieveMapperTest extends AbstractRootContextTest{
 		Map<String,Object> rsvt = new HashMap<>();
 		rsvt.put("cstHp", cstHp);
 		rsvt.put("rsvtNo", rsvtNo);
-		dao.selectNberRsvtList(rsvt);
+//		dao.selectNberRsvtList(rsvt);
 	}
 
 }

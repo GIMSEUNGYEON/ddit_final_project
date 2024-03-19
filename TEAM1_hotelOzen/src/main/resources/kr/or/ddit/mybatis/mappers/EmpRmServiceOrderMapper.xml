@@ -86,4 +86,53 @@
 		]]>
 		ORDER BY RSOD_NO DESC
 	</select>
+	
+	
+	
+	<select id="rmSvcOderNo" resultType="String">
+		SELECT 
+		    'RSL' || TO_CHAR(SYSDATE, 'YYMM') || LPAD(COALESCE(MAX(TO_NUMBER(SUBSTR(RSOD_NO, 8))), 0) + 1, 4, '0') AS RSOD_NO 
+		FROM 
+		    TB_RMSERVICE_ORDER
+		WHERE 
+		    RSOD_NO LIKE ('RSL%')
+		    AND SUBSTR(RSOD_NO, 4, 2) = TO_CHAR(SYSDATE, 'YY') 
+		    AND SUBSTR(RSOD_NO, 6, 2) = TO_CHAR(SYSDATE, 'MM')
+	</select>
+	
+	<select id="rmSvc" resultType="RmserviceVO" parameterType="String">
+		SELECT
+		    RS_MENU_NM
+		    , RS_AMNT
+		FROM 
+		    TB_RMSERVICE
+		WHERE 
+		    RS_CD = #{rsCd}
+	</select>
+	
+	<insert id="rmSvcOrderInsert" parameterType="Map">
+		INSERT INTO TB_RMSERVICE_ORDER (
+		    RSOD_NO
+		    , CHKIN_NO
+		    , RSOD_SETLE_AMNT
+		    , RSOD_DT
+		) VALUES (
+		    #{rmSvcOrderNo}
+		  , #{chkinNo}
+		  , #{rsodSetleAmnt}
+		  , SYSTIMESTAMP
+		)
+	</insert>
+	
+	<insert id="rmSvcDtlInsert" parameterType="Map">
+		INSERT INTO TB_RMSERVICE_DETAILS (
+		    RSOD_NO
+		    , RS_CD
+		    , RSD_DTL_CNT
+		) VALUES (
+		    #{rmSvcOrderNo}
+		  , #{rsCd}
+		  , #{rsdDtlCnt}
+)
+	</insert>
 </mapper>

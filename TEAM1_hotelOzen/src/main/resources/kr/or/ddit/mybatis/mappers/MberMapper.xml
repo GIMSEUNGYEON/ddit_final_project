@@ -5,7 +5,7 @@
 	<resultMap type="MberVO" id="mberMap" autoMapping="true">
 		<id property="cstNo" column="CST_NO"/>
 		<association property="cst" javaType="CstmrVO" autoMapping="true"></association>
-		<collection property="mbrsh" javaType="list" ofType="MberMbrshVO" autoMapping="true">
+		<collection property="mbrsh" javaType="list" ofType="MbrshVO" autoMapping="true">
 			<id property="mbsNo" column="MBS_NO"/>
 		</collection>
 		<collection property="userRoles" ofType="string">
@@ -19,7 +19,6 @@
 		  , MBER_PW
 		  , MBER_HOME_TEL
 		  , MBER_ADDR
-		  , MBER_MLG
 		  , MBER_SECSN_YN
 		  , MBER_MBRSH_YN
 		  , MBER_SBSCRB_YMD
@@ -48,7 +47,6 @@
 		  , MBER_PW
 		  , MBER_HOME_TEL
 		  , MBER_ADDR
-		  , MBER_MLG
 		  , MBER_SECSN_YN
 		  , MBER_MBRSH_YN
 		  , MBER_SBSCRB_YMD
@@ -72,7 +70,7 @@
 	<resultMap type="MberVO" id="mberListMap" autoMapping="true">
 		<id property="cstNo" column="CST_NO"/>
 		<association property="cst" javaType="CstmrVO" autoMapping="true"></association>
-		<collection property="mbrsh" javaType="list" ofType="MberMbrshVO" autoMapping="true">
+		<collection property="mbrsh" javaType="list" ofType="MbrshVO" autoMapping="true">
 			<id property="mbsNo" column="MBS_NO"/>
 		</collection>
 	</resultMap>
@@ -81,7 +79,6 @@
 			SELECT
 			    TB_MBER.CST_NO
 			  , TB_MBER.MBER_ID
-			  , TB_MBER.MBER_MLG
 			  , TB_MBER.MBER_MBRSH_YN
 			  , TB_CSTMR.CST_NM
 			  , TB_CSTMR.CST_HP

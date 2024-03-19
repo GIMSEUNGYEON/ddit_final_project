@@ -26,28 +26,18 @@
 		<include refid="searchFrag" />
 	</select>
 	
-	<select id="selectList" resultType="FxtrsVO" parameterType="PaginationInfo">
-		WITH RNUMFXTRS AS (
-			SELECT 
-				ROWNUM RNUM, A.*    
-		    FROM (
-				SELECT 
-				    FX_CD
-				    , FX_NM
-				    , FX_PRES_CNT
-				    , FX_TTRTN_CNT
-				    , FX_PRFRN
-				FROM 
-				    TB_FXTRS
-				<include refid="searchFrag" />
-				ORDER BY FX_CD 
-			)A
-		)
-		SELECT *
-		FROM RNUMFXTRS
-		<![CDATA[
-			WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
-		]]>
+	<select id="selectList" resultType="FxtrsVO">
+		SELECT 
+		    FX_CD
+		    , FX_NM
+		    , FX_PRES_CNT
+		    , FX_TTRTN_CNT
+		    , FX_CLS_CD
+		    , FX_UNIT
+		FROM 
+		    TB_FXTRS
+		<include refid="searchFrag" />
+		ORDER BY FX_CD 
 		
 	</select>
 	<!-- 현재비품 내역 조회 쿼리 end -->	

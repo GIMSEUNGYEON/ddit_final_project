@@ -27,7 +27,13 @@
 					, DCLZ_BGN_DT
 					, DCLZ_END_DT
 					, WORK_TYPE_CD
-					, DCLZ_STTS
+					, DECODE(DCLZ_STTS
+						, 'O', '출근'
+						, 'SL', '병가'
+						, 'VA', '연차'
+						, 'AB', '무단결근'
+						, 'X', '휴일'
+					) AS DCLZ_STTS
 				FROM TB_DCLZ
 				WHERE EMP_NO = #{empNo}
 				<include refid="searchFrag" />

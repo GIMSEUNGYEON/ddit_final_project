@@ -69,4 +69,10 @@
 	WHERE CST_NO = #{cstNo} AND SCRAP_NO= #{scrapNo}
 </delete>
 
+<select id="checkCarScrap" parameterType="ScrapVO">
+	SELECT COUNT(*)
+	FROM TB_SCRAP
+	WHERE CST_NO = #{cstNo} AND SCRAP_NO = #{scrapNo}
+</select>
+
 </mapper>

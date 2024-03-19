@@ -15,8 +15,8 @@
 </parameterMap>
 
 <select id="selectRecomSbrs" resultMap="SbrsMap" parameterMap="cstmrMap">
-	SELECT
-		SBRS_CD
+   SELECT
+      SBRS_CD
         , SBRS_UTLZT_DT
         , SBRS_UTLZT_DATE
         , SBRS_FLOOR
@@ -25,12 +25,12 @@
         , SBRS_CHILD_FEE
         , SBRS_DETAIL
         , RECOM_RANK
-	FROM 
-		TB_SBRS INNER JOIN TB_RECOM_SBRS USING (SBRS_CD)
-	WHERE 
-		MBTI = #{mbti} AND RECOM_SEASON = #{season} AND RECOM_AGE = #{age}
-	ORDER BY 
-		RECOM_RANK
+   FROM 
+      TB_SBRS INNER JOIN TB_RECOM_SBRS USING (SBRS_CD)
+   WHERE 
+      MBTI = #{mbti} AND RECOM_SEASON = #{season} AND RECOM_AGE = #{age}
+   ORDER BY 
+      RECOM_RANK
 </select>
 
 
@@ -46,9 +46,9 @@
 	    SELECT
 	        SUBSTR(TB_MBER.mber_mbti,0,1) AS MBTI,
 	        CASE 
-	            WHEN EXTRACT(MONTH FROM TB_RSVT.RSVT_CHECKIN_YMD) BETWEEN 3 AND 5 THEN 'spring'
-	            WHEN EXTRACT(MONTH FROM TB_RSVT.RSVT_CHECKIN_YMD) BETWEEN 6 AND 8 THEN 'summer'
-	            WHEN EXTRACT(MONTH FROM TB_RSVT.RSVT_CHECKIN_YMD) BETWEEN 9 AND 11 THEN 'autumn'
+	            WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 3 AND 5 THEN 'spring'
+	            WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 6 AND 8 THEN 'summer'
+	            WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 9 AND 11 THEN 'autumn'
 	            ELSE 'winter'
 	        END AS season,
 	        CASE 
@@ -58,9 +58,7 @@
 	        END AS age
 	    FROM TB_CSTMR
 	        INNER JOIN TB_MBER ON (TB_CSTMR.CST_NO=TB_MBER.CST_NO)
-	        INNER JOIN TB_RSVT ON (TB_CSTMR.CST_NO=TB_RSVT.CST_NO)
 	    WHERE tb_cstmr.cst_no = #{cstNo}
-	    ORDER BY TB_RSVT.RSVT_CHECKIN_YMD
 	)
 	WHERE ROWNUM <= 1
 	]]>
@@ -81,5 +79,11 @@
 	FROM TB_SCRAP
 	WHERE CST_NO = #{cstNo} AND SCRAP_NO= #{scrapNo}
 </delete>
+
+<select id="checkSbrsScrap" parameterType="ScrapVO">
+	SELECT COUNT(*)
+	FROM TB_SCRAP
+	WHERE CST_NO = #{cstNo} AND SCRAP_NO = #{scrapNo}
+</select>
 
 </mapper>

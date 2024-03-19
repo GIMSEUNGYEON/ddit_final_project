@@ -14,9 +14,9 @@ class AdultAnnotationTest {
 	@Test
 	void test() {
 		LocalDate currentDate = LocalDate.now();
-		LocalDate testDate = LocalDate.of(2005, 1, 1);
+		LocalDate testDate = LocalDate.of(2005, 4, 1);
 		
-		boolean test = currentDate.minusYears(18).isAfter(testDate);
+		boolean test = currentDate.minusYears(19).isAfter(testDate);
 		log.info("{}", test);
 	}
 

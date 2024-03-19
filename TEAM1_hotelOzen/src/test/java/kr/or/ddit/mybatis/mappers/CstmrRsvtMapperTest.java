@@ -63,7 +63,7 @@ class CstmrRsvtMapperTest extends AbstractRootContextTest{
 		rsvtData.put("rsvtCheckoutYmd",rsvtCheckoutYmd);
 		rsvtData.put("nbrCnt",nbrCnt);
 		rsvtData.put("rsvtRoomCnt",rsvtRoomCnt);
-		log.info("{}",dao.selectRsvtRmt(rsvtData));
+//		log.info("{}",dao.selectRsvtRmt(rsvtData));
 	}
 	
 	

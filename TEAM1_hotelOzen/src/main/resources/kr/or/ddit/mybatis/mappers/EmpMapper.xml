@@ -8,11 +8,13 @@
 			<result column="USER_ROLE"/>
 		</collection>
 	</resultMap>
+	
 	<update id="changePwd" parameterType="EmpVO">
 		UPDATE TB_EMP
 		SET EMP_PW = #{empPw}
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
 	<select id="select" parameterType="string" resultType="EmpVO">
 		SELECT 
 			EMP_NO
@@ -42,10 +44,12 @@
 		FROM TB_EMP
 		WHERE EMP_NO = #{empNo}		
 	</select>
+	
 	<select id="selectList" resultType="EmpVO">
 		SELECT *
 		FROM TB_EMP
 	</select>
+	
 	<select id="selectEmpByUserName" parameterType="string" resultMap="empMap">
 		SELECT EMP_NO, EMP_NM, EMP_PW, USER_ROLE
 		FROM TB_EMP
@@ -101,4 +105,14 @@
 		    , EMP_PROFL_NM = NULL
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<select id="loginEmpVOs" resultType="EmpVO">
+		SELECT 
+			EMP_NO
+			, EMP_DEPT
+		FROM TB_EMP 
+		WHERE 
+		    EMP_DEPT IN ('FMT', 'FTO', 'HRM', 'POS', 'CRM', 'HKP') 
+		    AND EMP_JBGD = 'DPM'
+	</select>
 </mapper>

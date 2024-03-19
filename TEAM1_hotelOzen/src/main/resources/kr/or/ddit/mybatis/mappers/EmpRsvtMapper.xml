@@ -62,6 +62,20 @@
 				    INNER JOIN TB_RSVT_DETAILS USING(RSVT_NO)
 				    INNER JOIN TB_CSTMR USING(CST_NO)
 				<include refid="searchFrag" />
+                GROUP 
+                	BY RSVT_NO
+				    , CST_NM
+				    , RSVT_YMD
+				    , RSVT_CHECKIN_YMD
+				    , RMT_TYPE_CD
+				    , RSVT_ROOM_CNT
+				    , RSVT_ADULT_CNT
+				    , RSVT_CHILD_CNT
+				    , RSVT_SE
+				    , CST_NO
+				    , RSVT_AMNT
+				    , RSVT_CNCL_YN
+				    , RSVT_SETLE_NO
 				ORDER BY RSVT_NO DESC
 			)A
 		)
@@ -86,7 +100,6 @@
 		    , RSVT_CHILD_CNT
 		    , RMT_TYPE_CD
 		    , RMT_TYPE_CD
-		    , RM_NO
 		    , RSVT_SE
 		    , RSVT_AMNT    
 		    , CST_NO
@@ -98,4 +111,24 @@
 		    RSVT_NO = #{rsvtNo}
 	</select>
 
+	<update id="updateCXL" parameterType="String">
+	    <![CDATA[
+	      BEGIN
+	        UPDATE 
+	        	TB_RSVT 
+	        SET 
+	        	RSVT_CNCL_YN = 'Y' 
+	        WHERE 
+	        	RSVT_NO=#{rsvtNo};
+	        	
+	        UPDATE 
+	        	TB_RSVT_DETAILS 
+	        SET 
+	        	RSVT_SE = '예약취소' 
+	        WHERE 
+	        	RSVT_NO=#{rsvtNo};
+	      END;
+	    ]]>
+	</update>
+	  
 </mapper>
