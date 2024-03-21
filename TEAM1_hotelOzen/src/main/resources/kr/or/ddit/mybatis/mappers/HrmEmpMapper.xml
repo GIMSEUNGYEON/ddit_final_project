@@ -67,14 +67,30 @@ INSERT INTO TB_EMP (
 		  , EMP_PROFL_NM
 		  , EMP_PROFL_UUID
 		  , EMP_ANNUAL_LEAVE
-		  , EMP_JBGD
-		  , EMP_DEPT
+		  , DECODE(EMP_JBGD, 'STF', '사원', 'DPM', '팀장') AS EMP_JBGD
+		  , DECODE(EMP_JBGD, 'DPM', '1', 'STF', '2') AS EMP_JBGD_NO
+		  , CASE WHEN TB_EMP.EMP_DEPT ='FTO' THEN '프론트오피스부'
+	        WHEN TB_EMP.EMP_DEPT ='HKP' THEN '하우스키핑부'
+	        WHEN TB_EMP.EMP_DEPT ='FMT' THEN '시설관리부'
+	        WHEN TB_EMP.EMP_DEPT ='CRM' THEN '고객관리부'
+	        WHEN TB_EMP.EMP_DEPT ='POS' THEN '재무부'
+	        WHEN TB_EMP.EMP_DEPT ='HRM' THEN '인사부'
+	        ELSE '부서미배정'
+	        END AS EMP_DEPT
+	      , DECODE(EMP_DEPT
+	      				, 'FTO', '1'
+	      				, 'HKP', '2'
+	      				, 'FMT', '3'
+	      				, 'CRM', '4'
+	      				, 'POS', '5'
+	      				, 'HRM', '6') AS EMP_DEPT_NO
 		  , EMP_BIRTH
 		  , EMP_PW
 		  , USER_ROLE
 		FROM
 	    	TB_EMP
 	    WHERE EMP_RTRM_YN IS NULL) A
+	    ORDER BY EMP_DEPT_NO, EMP_JBGD_NO
 </select>
 
 
@@ -97,7 +113,7 @@ INSERT INTO TB_EMP (
 	  , EMP_PROFL_NM
 	  , EMP_PROFL_UUID
 	  , EMP_ANNUAL_LEAVE
-	  , EMP_JBGD
+	  , DECODE(EMP_JBGD, 'STF', '사원', 'DPM', '팀장') AS EMP_JBGD
 	  , EMP_DEPT
 	  , EMP_BIRTH
 	  , EMP_PW
@@ -127,7 +143,7 @@ INSERT INTO TB_EMP (
 	  , EMP_PROFL_NM
 	  , EMP_PROFL_UUID
 	  , EMP_ANNUAL_LEAVE
-	  , EMP_JBGD
+	  , DECODE(EMP_JBGD, 'STF', '사원', 'DPM', '팀장') AS EMP_JBGD
 	  , EMP_DEPT
 	  , EMP_BIRTH
 	  , EMP_PW
@@ -151,7 +167,7 @@ INSERT INTO TB_EMP (
 	  , EMP_PROFL_NM
 	  , EMP_PROFL_UUID
 	  , EMP_ANNUAL_LEAVE
-	  , EMP_JBGD
+	  , DECODE(EMP_JBGD, 'STF', '사원', 'DPM', '팀장') AS EMP_JBGD
 	  , EMP_DEPT
 	  , EMP_BIRTH
 	  , EMP_PW

@@ -5,7 +5,7 @@
 	<resultMap type="MberVO" id="mberMap" autoMapping="true">
 		<id property="cstNo" column="CST_NO"/>
 		<association property="cst" javaType="CstmrVO" autoMapping="true"></association>
-		<collection property="mbrsh" javaType="list" ofType="MbrshVO" autoMapping="true">
+		<collection property="mbrsh" javaType="list" ofType="MbrshSetleVO" autoMapping="true">
 			<id property="mbsNo" column="MBS_NO"/>
 		</collection>
 		<collection property="userRoles" ofType="string">
@@ -70,7 +70,7 @@
 	<resultMap type="MberVO" id="mberListMap" autoMapping="true">
 		<id property="cstNo" column="CST_NO"/>
 		<association property="cst" javaType="CstmrVO" autoMapping="true"></association>
-		<collection property="mbrsh" javaType="list" ofType="MbrshVO" autoMapping="true">
+		<collection property="mbrsh" javaType="list" ofType="MbrshSetleVO" autoMapping="true">
 			<id property="mbsNo" column="MBS_NO"/>
 		</collection>
 	</resultMap>

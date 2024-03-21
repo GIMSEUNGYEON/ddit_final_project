@@ -15,19 +15,21 @@
 
 	<insert id="insertEmpSchdl" parameterType="EmpSchdlVO">
 		INSERT INTO 
-		TB_EMP_SCHDL (
-		    EMP_NO
-		    , SCHDL_TITLE
-		    , SCHDL_START
-		    , SCHDL_END
-		    , BG_COLOR
-		) VALUES (
-		    #{empNo}
-		    , #{schdlTitle}
-		    , #{schdlStart}
-		    , #{schdlEnd}
-		    , #{bgColor}
-		)
+			TB_EMP_SCHDL (
+			    EMPSCHDL_NO
+			    , EMP_NO
+			    , SCHDL_TITLE
+			    , SCHDL_START
+			    , SCHDL_END
+			    , BG_COLOR
+			) VALUES (
+			    EMPSCHDL_SEQ.NEXTVAL
+			    , #{empNo}
+			    , #{schdlTitle}
+			    , #{schdlStart}
+			    , #{schdlEnd}
+			    , #{bgColor}
+			)
 	</insert>
 	
 	<delete id="deleteEmpSchdl" parameterType="EmpSchdlVO">

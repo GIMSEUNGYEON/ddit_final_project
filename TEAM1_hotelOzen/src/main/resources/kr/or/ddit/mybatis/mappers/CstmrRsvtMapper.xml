@@ -134,6 +134,7 @@
 			, SETLE_IMP_UID
 			, SETLE_MERCHANT_UID
 			, SETLE_PAY_METHOD
+			, SETLE_ADD
 			)
 		VALUES(
 			#{setleNo,jdbcType=VARCHAR}
@@ -146,6 +147,7 @@
 			, #{setleImpUid,jdbcType=VARCHAR}
 			, #{setleMerchantUid,jdbcType=VARCHAR}
 			, #{setlePayMethod,jdbcType=VARCHAR}
+			, 'CPRO'
 
 		)
 	</insert>
