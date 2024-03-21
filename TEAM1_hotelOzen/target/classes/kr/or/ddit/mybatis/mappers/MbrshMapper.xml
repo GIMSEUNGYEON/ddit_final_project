@@ -75,5 +75,27 @@
 		END
 	</select>
 	
-
+	<select id="selectOne" resultType="MbrshGrdVO">
+		SELECT 
+		    MBS_GRD_CD
+		    , MBS_GRD_AMNT 
+		FROM TB_MBRSH_GRD
+		WHERE MBS_GRD_CD = #{grd}
+	</select>
+	
+	<select id="selectCouponList">
+		<![CDATA[
+		WITH CPN_PRV_CNT_RECURSIVE (MBS_GRD_CD, CPNK_NO, CPN_PRV_CNT, iteration) AS (
+		    SELECT MBS_GRD_CD, CPNK_NO, CPN_PRV_CNT, 1 AS iteration
+		    FROM TB_MBRSH_BNF
+		    WHERE MBS_GRD_CD = #{grd}
+		    UNION ALL
+		    SELECT MBS_GRD_CD, CPNK_NO, CPN_PRV_CNT, iteration + 1
+		    FROM CPN_PRV_CNT_RECURSIVE
+		    WHERE iteration < CPN_PRV_CNT
+		)
+		SELECT MBS_GRD_CD, CPNK_NO, CPN_PRV_CNT
+		FROM CPN_PRV_CNT_RECURSIVE
+		]]>
+	</select>
 </mapper>

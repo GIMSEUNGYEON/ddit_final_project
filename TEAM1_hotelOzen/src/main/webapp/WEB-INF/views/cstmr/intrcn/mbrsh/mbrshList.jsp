@@ -11,7 +11,11 @@
 	<div>
 		<div class="notice-header">
 			<h1 class="cstmr-title mx-6">MEMBERSHIP</h1>
-			<p class="cstmr-content mx-6 mb-5">호텔 오젠의 멤버십을 소개합니다.</p>
+			<p class="cstmr-content mx-6 mb-5">
+			오젠 멤버십은 품격있는 라이프스타일과 특별한 경험을 제안합니다.
+			<br>
+			오젠 호텔에서 다채로운 혜택과 최상의 서비스를 누려보세요.
+			</p>
 		</div>
 	</div>
 	

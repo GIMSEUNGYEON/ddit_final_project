@@ -284,6 +284,3 @@
 		});
 	}
 </script>
-
-<script defer
-	src="<c:url value='/resources/js/app/cstmr/rsvt/rsvtStep03.js'/>"></script>

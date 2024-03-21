@@ -22,6 +22,8 @@ public class MberVO implements Serializable {
 	private boolean mberMbrshYn;
 	private String mberSbscrbYmd;
 	
+	private int mberMileage;
+	
 	private List<String> userRoles;
 	
 	private CstmrVO cst;

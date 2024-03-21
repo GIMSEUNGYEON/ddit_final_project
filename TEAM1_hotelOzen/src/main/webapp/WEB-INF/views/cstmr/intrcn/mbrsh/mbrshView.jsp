@@ -4,8 +4,25 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <link href="${pageContext.request.contextPath}/resources/css/cstmr/intrcn/mbrsh/mbrshView.css" rel="stylesheet">
+<script type="text/javascript">
+	let auth = false;
+</script>
+	<security:authorize access="isAuthenticated()">
+<script type="text/javascript">
+		auth = true;
+</script>
+	</security:authorize>
+
+<security:authorize access="isAnonymous()">
+
+<script type="text/javascript">
+		auth = false;
+</script>
+</security:authorize>
+
 
 <section class="${mbsGrdCd }">
 
@@ -20,7 +37,7 @@
 							<p class="mbsGrdAmnt"><fmt:formatNumber value="${mbsGrdList[0].mbsGrdAmnt }" pattern="#,###" />KRW</p>
 						</div>
 						<div class="col-md-6 text-center">
-	                    <button class="custom-btn btn-6 mt-4" onclick="location.href='${pageContext.request.contextPath}/mbrsh/subscribe/${mbsGrdList[0].mbsGrdCd }'">
+	                    <button class="custom-btn btn-6 mt-4" onclick="subLocate(event);" id="${mbsGrdList[0].mbsGrdCd }">
 	                    <span>
 		                	 구매
 	                	 </span>
@@ -51,7 +68,7 @@
                         <span class="tit">할인 특전</span>
                         <strong class="tax"><span class="grd-prk">${mbsGrdList[0].mbsGrdPrk }</span></strong>
                         <span class="txt">이용 및 할인권</span>
-                        <span class="txt">매달<em> ${mbsGrdList[0].totalCoupon }매</em> 제공</span>
+                        <span class="txt"><em> ${mbsGrdList[0].totalCoupon }매</em> 제공</span>
                     </div>
                 </div>
 			</div>
@@ -81,7 +98,7 @@
                         <span class="tit">할인 특전</span>
                         <strong class="tax"><span class="grd-prk">${mbsGrdList[1].mbsGrdPrk }</span></strong>
                         <span class="txt">이용 및 할인권</span>
-                        <span class="txt">매달<em> ${mbsGrdList[1].totalCoupon }매</em> 제공</span>
+                        <span class="txt"><em> ${mbsGrdList[1].totalCoupon }매</em> 제공</span>
 
                     </div>
                 </div>				
@@ -145,7 +162,7 @@
                         <span class="tit">할인 특전</span>
                         <strong class="tax"><span class="grd-prk">${mbsGrdList[2].mbsGrdPrk }</span></strong>
                         <span class="txt">이용 및 할인권</span>
-                        <span class="txt">매달<em> ${mbsGrdList[2].totalCoupon }매</em> 제공</span>
+                        <span class="txt"><em> ${mbsGrdList[2].totalCoupon }매</em> 제공</span>
                     </div>
                 </div>
 			</div>
@@ -155,6 +172,28 @@
 		 클릭
 	</button>
 </section>
+
+<div id="layerPop1" class="layerPop" style="display: none;">
+	<div class="layerCont" tabindex="0" style="top: 50%; left: 50%; margin-top: -245.338px; margin-left: -470px;" data-gtm-vis-recent-on-screen36519946_61="1150" data-gtm-vis-first-on-screen36519946_61="1150" data-gtm-vis-total-visible-time36519946_61="100" data-gtm-vis-has-fired36519946_61="1">
+		<div class="compLayer" data-gtm-vis-has-fired36519946_61="1">
+            <h2 class="compTit" data-gtm-vis-has-fired36519946_61="1">오젠 멤버십 구매</h2>
+            <div class="membershipInfoArea" data-gtm-vis-has-fired36519946_61="1">                
+                <div class="membershipInfo" data-gtm-vis-has-fired36519946_61="1">
+                    <span class="tit" data-gtm-vis-has-fired36519946_61="1">아직 회원이 아니신가요?</span>
+                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">회원이 아닌 경우, 신규 회원가입 후 멤버십 구매가 가능합니다.</span>
+                    <a href="${pageContext.request.contextPath }/auth/join/terms.do" class="btnSC btnM" data-gtm-vis-has-fired36519946_61="1">회원가입</a>
+                </div>
+                <div class="membershipInfo" data-gtm-vis-has-fired36519946_61="1">
+                    <span class="tit" data-gtm-vis-has-fired36519946_61="1">이미 회원이신가요?</span>
+                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">로그인 시 바로 멤버십 구매가 가능합니다.</span>
+                    <a href="${pageContext.request.contextPath }/auth/Login.do" class="btnSC btnM active" data-gtm-vis-has-fired36519946_61="1">로그인</a>
+                </div>
+            </div>
+		</div>
+		<button type="button" class="btn-close btnClose" onclick="fncCancel()" data-gtm-vis-has-fired36519946_61="1">닫기</button>
+	</div>
+</div>
+
 <div id="layerPop2" class="layerPop" style="display: none;">
 	<div class="layerCont" style="top: 50%; left: 50%; margin-top: -375.438px; margin-left: -540px;" tabindex="" data-gtm-vis-has-fired36519946_61="1">
 		<div class="membershipConsult" data-gtm-vis-has-fired36519946_61="1">
@@ -252,11 +291,11 @@
 				</ul>
 			</div><div class="scrollbar-wrap" style="height: 465px;" data-gtm-vis-has-fired36519946_61="1"><div class="scrollbar" style="height: 148.333px; top: 0px;" data-gtm-vis-has-fired36519946_61="1"></div></div></div></div>
 			<div class="btnArea" data-gtm-vis-has-fired36519946_61="1">
-				<button type="button" class="btnSC btnM" onclick="fncCancel();" data-gtm-vis-has-fired36519946_61="1">취소</button>
+				<button type="button" class="btnSC btnM" onclick="fncCancel2();" data-gtm-vis-has-fired36519946_61="1">취소</button>
 				<button type="button" class="btnSC btnM active" onclick="fncRegist();return false;" data-gtm-vis-has-fired36519946_61="1">상담 예약</button>
 			</div>
 		</div>
-		<button type="button" class="btn-close btnClose" onclick="fncCancel();" aria-label="Close">닫기</button>
+		<button type="button" class="btn-close btnClose" onclick="fncCancel2();" aria-label="Close">닫기</button>
 	</div>
 </div>
 <div id="dimmed" class="dimmed" style="display: none;"></div>

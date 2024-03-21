@@ -27,6 +27,12 @@
 			<aop:around method="loggingAdvice" pointcut-ref="pointcut"/>
 		</aop:aspect>
 	</aop:config>
+	
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <!-- TransactionManager 설정 -->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!-- 원하는 다른 설정 추가 -->
+    </bean>
 </beans>
 
 

@@ -16,7 +16,7 @@
 .myContents .defaultTit {
     display: inline-block;
     color: #333;
-    font: 500 26px/1 gothamM,notokrR;
+    font: 500 24px/1 gothamM,notokrR;
     text-transform: uppercase;
 }
 

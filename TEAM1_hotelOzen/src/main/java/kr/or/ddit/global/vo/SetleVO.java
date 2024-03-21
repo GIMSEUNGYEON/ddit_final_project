@@ -9,11 +9,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(of = "setleNo")
 public class SetleVO {
 
+	private String setleNo;
 	private String setleCardNm;
 	private String setleCardNumber;
 	private String setleImpUid;
 	private String setleMerchantUid;
-	private String setleNo;
 	private String cstNo;
 	private LocalDate setleYmd;
 	private String setlePayMethod;

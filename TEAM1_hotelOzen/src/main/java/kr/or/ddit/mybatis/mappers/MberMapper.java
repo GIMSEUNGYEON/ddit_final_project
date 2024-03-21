@@ -21,5 +21,7 @@ public interface MberMapper extends AbstractCommonMapper<MberVO, String>{
 	public int updateMber(RegistVO mber);
 	
 	public int changePwd(MberVO mber);
+
+	public MberVO selectSubscriber(String cstNo);
 	
 }

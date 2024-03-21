@@ -155,4 +155,19 @@
 		WHERE MBER_ID = #{mberId}
 	</update>
 	
+	<resultMap type="MberVO" id="subscriber" autoMapping="true">
+		<id property="cstNo" column="CST_NO" />
+		<association property="cst" autoMapping="true" javaType="CstmrVO"/>
+	</resultMap>
+	
+	<select id="selectSubscriber" resultMap="subscriber">
+		SELECT
+			CST_NO
+			, CST_NM
+			, CST_HP
+			, CST_MAIL
+			, MBER_ADDR
+		FROM TB_MBER INNER JOIN TB_CSTMR USING (CST_NO)
+		WHERE CST_NO = #{cstNo}
+	</select>
 </mapper>
