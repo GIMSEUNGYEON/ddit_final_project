@@ -50,7 +50,7 @@
 			<div class="mb-3">
 				<label class="label-font">* Gender</label> 
 				<br>
-				<form:select path="cstGen" class="bor-none  wd-170" id="cstGen">
+				<form:select path="cstGen" class="bor-none  wd-170" id="cstGen" required="true">
 					<form:option value="" label="Gender"/>
 					<form:option value="F" label="Female" />
 					<form:option value="M" label="Male" />

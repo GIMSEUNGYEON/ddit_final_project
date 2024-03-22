@@ -31,11 +31,13 @@
 	<result property="empPaymentAmnt" column="PAYMENT_AMNT"/>
 	<result property="empDeductionAmnt" column="DEDUCTION_AMNT"/>
 	<result property="empThePay" column="THE_PAY"/>
+	<result property="empJbgd" column="EMP_JBGD"/>
 </resultMap>
 <select id="selectAutoSalaryCalInQuery" parameterType="hashmap" resultMap="autoInQueryMap">
 	SELECT 
 		TB_EMP.EMP_NM
-		, TO_CHAR(TB_EMP.EMP_JNCMP_YMD, 'yyyy-mm-dd') as EMP_JNCMP_YMD
+		, DECODE(EMP_JBGD, 'STF', '사원', 'DPM','팀장') AS EMP_JBGD
+		, TO_CHAR(TB_EMP.EMP_JNCMP_YMD, 'yyyy-mm-dd') AS EMP_JNCMP_YMD
 		, CASE WHEN TB_EMP.EMP_DEPT ='FTO' THEN '프론트오피스부'
 	        WHEN TB_EMP.EMP_DEPT ='HKP' THEN '하우스키핑부'
 	        WHEN TB_EMP.EMP_DEPT ='FMT' THEN '시설관리부'

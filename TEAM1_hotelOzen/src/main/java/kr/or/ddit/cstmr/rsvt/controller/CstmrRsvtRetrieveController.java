@@ -1,33 +1,14 @@
 package kr.or.ddit.cstmr.rsvt.controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.simple.JSONObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,18 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
 import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtRetrieveService;
+import kr.or.ddit.cstmr.rsvt.service.RefundService;
 import kr.or.ddit.global.security.MberVOWrapper;
 import kr.or.ddit.global.vo.CstmrVO;
 import kr.or.ddit.global.vo.MberVO;
-import kr.or.ddit.global.vo.RefndVO;
 import kr.or.ddit.global.vo.RsvtDetailsVO;
 import kr.or.ddit.global.vo.RsvtVO;
 import kr.or.ddit.global.vo.SetleVO;
@@ -61,6 +37,9 @@ public class CstmrRsvtRetrieveController {
 	@Inject
 	private CstmrRsvtRetrieveService service;
 
+	@Inject
+	private RefundService refundService;
+	
 	/**
 	 * 회원일 시 예약조회 페이지 이동, 비회원은 입력 폼 이동
 	 * 
@@ -178,50 +157,8 @@ public class CstmrRsvtRetrieveController {
 		return "cstmr/rsvt/rsvtNberView";
 	}
 
-	public static final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
-
 	public static final String KEY = "2321751576818553";
 	public static final String SECRET = "blhkWoYeaswfXI5HHqu7apes10sIdWTwsUk8cqZgQJcf3aQnZ4eKtFCz5fc20VZ50J2eqnUBIwsLljqI";
-
-	// 아임포트 인증(토큰)을 받아주는 함수
-	public String getImportToken() throws IOException {
-
-		HttpsURLConnection conn = null;
-
-		URL url = new URL("https://api.iamport.kr/users/getToken");
-
-		conn = (HttpsURLConnection) url.openConnection();
-
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-type", "application/json");
-		conn.setRequestProperty("Accept", "application/json");
-		conn.setDoOutput(true);
-		JSONObject json = new JSONObject();
-
-		json.put("imp_key", KEY);
-		json.put("imp_secret", SECRET);
-
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-
-		bw.write(json.toString());
-		bw.flush();
-		bw.close();
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-
-		Gson gson = new Gson();
-
-		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
-
-		System.out.println(response);
-
-		String token = gson.fromJson(response, Map.class).get("access_token").toString();
-
-		br.close();
-		conn.disconnect();
-
-		return token;
-	}
 
 	/**
 	 * 결제취소 메소드
@@ -229,21 +166,19 @@ public class CstmrRsvtRetrieveController {
 	 */
 	@PostMapping(value = "rsvtCancel", consumes = MediaType.APPLICATION_JSON_VALUE, produces =MediaType.APPLICATION_JSON_VALUE )
 	@ResponseBody
-	public ResponseEntity<String> rsvtCancel(
+	public String rsvtCancel(
 	        @RequestBody Map<String, Object> requestData
 	) throws IOException {
-	    String token = getImportToken();
-	    log.info("@@@@@@token:{}", token);
 	    log.info("@@@@@@setleVO:{}", requestData.get("setleMerchantUid"));
 	    log.info("@@@@@@setleVO:{}", requestData.get("refndAmnt"));
 	    log.info("@@@@@@setleVO:{}", requestData.get("reason"));
 	    log.info("@@@@@@setleVO:{}", requestData.get("cstNo"));
-
-	    // 처리 결과에 따라 적절한 응답 반환
-	    if (true) {
-	        return ResponseEntity.ok("Success");
-	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed");
-	    }
+	    
+	    String merchantUid = requestData.get("setleMerchantUid").toString();
+	    
+		String token = refundService.getToken(KEY, SECRET);
+		refundService.refundRequest(token, merchantUid, "예약취소");
+		
+		return "redirect:rsvtCancel";
 	}
 }

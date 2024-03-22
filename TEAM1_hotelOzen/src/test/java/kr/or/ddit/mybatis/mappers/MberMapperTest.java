@@ -60,4 +60,16 @@ class MberMapperTest extends AbstractRootContextTest {
 		
 		dao.findMberUser(newMber);
 	}
+	
+	@Test
+	void test3() {
+		MberVO mber = dao.selectMypage("M1800026");
+		log.info("{}", mber);
+	}
+
+	@Test
+	void test4() {
+		MberVO mber = dao.selectCouponCnt("M2400039");
+		log.info("{}", mber);
+	}
 }

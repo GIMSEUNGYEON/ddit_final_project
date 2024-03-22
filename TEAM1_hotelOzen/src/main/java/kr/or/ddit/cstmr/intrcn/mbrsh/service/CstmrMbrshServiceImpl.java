@@ -32,24 +32,36 @@ public class CstmrMbrshServiceImpl implements CstmrMbrshService {
 	@Inject
 	private TransactionTemplate transactionTemplate;
 
+	/**
+	 * 한가지 색의 멤버십 목록 조회(BBLUE, LBLUE, DBLUE)
+	 */
 	@Override
 	public List<MbrshGrdVO> retrieveMbrsh(String mbrshCd) {
 		
 		return dao.selectBenefit(mbrshCd);
 	}
 
+	/**
+	 * 모든 멤버십 목록 조회
+	 */
 	@Override
 	public List<MbrshGrdVO> retrieveMbrshList() {
 
 		return dao.selectList();
 	}
 
+	/**
+	 * 가입할 멤버십 하나에 대한 정보 조회
+	 */
 	@Override
 	public MbrshGrdVO retrieveOneMbrsh(String grd) {
 		
 		return dao.selectOne(grd);
 	}
 
+	/**
+	 * 멤버십 가입자에 대한 정보 조회
+	 */
 	@Override
 	public MberVO retrieveSubscriber(String cstNo) {
 		MberVO mber = mberDao.selectSubscriber(cstNo);
@@ -57,6 +69,9 @@ public class CstmrMbrshServiceImpl implements CstmrMbrshService {
 	}
 
 
+    /**
+     * 멤버십 가입 구현
+     */
     @Override
     public ServiceResult createMbrshInfo(Map<String, Object> mbrshData) {
         return transactionTemplate.execute(status -> {
@@ -106,6 +121,10 @@ public class CstmrMbrshServiceImpl implements CstmrMbrshService {
         });
     }
     
+    /**
+     * 쿠폰 발급 번호 생성 메서드
+     * @return
+     */
     static public String generateCouponCode(){
         String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         
@@ -122,5 +141,14 @@ public class CstmrMbrshServiceImpl implements CstmrMbrshService {
         
         return sb.toString();    	
     }
+
+	/**
+	 * 멤버십 종류 조회
+	 */
+	@Override
+	public List<MbrshGrdVO> retrieveAllMbrshList() {
+
+		return dao.selectMbrshList();
+	}
 	
 }

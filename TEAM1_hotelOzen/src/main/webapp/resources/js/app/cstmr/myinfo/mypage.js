@@ -20,14 +20,22 @@ function myPageHome(){
 	content.innerHTML = initialContent;
 }
 
-function loadMbrsh(){
-	fetch(cPath+'/myinfo/mbrshSetle.do')
+function mileageList(){
+	fetch(cPath+'/myinfo/mileageList.do')
 		.then(resp=> resp.text())
 		.then(data=>{
 			content.innerHTML= data;
 	});
 }
 
+function couponList(){
+	fetch(cPath+'/myinfo/couponList.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});
+	
+}
 
 function updateForm(){
 	fetch(cPath+'/myinfo/updateInfo.do')
@@ -37,3 +45,35 @@ function updateForm(){
 	});
 }
 
+function mypwchange(){
+	fetch(cPath+'/myinfo/mypwchange.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});
+}
+
+function secsn(){
+	fetch(cPath+'/myinfo/secsn.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});
+}
+
+function mbrshSetle(){
+	fetch(cPath+'/myinfo/mbrshSetle.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});
+}
+
+
+function scrapList(){
+	fetch(cPath+'/myinfo/scrapList.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});	
+}

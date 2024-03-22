@@ -5,10 +5,9 @@
 
 <select id="selectNewEmpNo" resultType="string">
 	SELECT 
-		'E'||TO_CHAR(SYSDATE,'YY')||LPAD(SUBSTR(EMP_NO,-4)+1, 4, 0) 
+    	NVL2(MAX(EMP_NO),'E'||TO_CHAR(SYSDATE,'YY')||LPAD(SUBSTR(MAX(EMP_NO),-4)+1, 4, 0), 'E'||TO_CHAR(SYSDATE,'YY')||'0001')
 	FROM TB_EMP
-	WHERE EMP_NO LIKE 'E'||TO_CHAR(SYSDATE,'YY')||'%' AND ROWNUM = '1'
-	ORDER BY EMP_NO DESC
+	WHERE EMP_NO LIKE 'E'||TO_CHAR(SYSDATE,'YY')||'%'
 </select>
 
 
@@ -192,6 +191,7 @@ INSERT INTO TB_EMP (
 	WHERE
 	    EMP_NO = #{empNo,jdbcType=VARCHAR}
 </update>
+<!-- 직원정보수정은 직원 정보 개인 페이지에서.. 따라서 사용하지 않는 쿼리문 -->
 
 <delete id="delete" parameterType="string">
 	UPDATE TB_EMP

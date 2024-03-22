@@ -170,4 +170,62 @@
 		FROM TB_MBER INNER JOIN TB_CSTMR USING (CST_NO)
 		WHERE CST_NO = #{cstNo}
 	</select>
+	
+	<resultMap type="MberVO" id="mypageMber" autoMapping="true">
+		<id property="cstNo" column="CST_NO"/>
+		<association property="cst" javaType="CstmrVO" autoMapping="true"/>
+		<collection property="mbrsh" autoMapping="true" javaType="list" ofType="MbrshSetleVO"/>
+		<collection property="couponList" autoMapping="true" javaType="list" ofType="CouponVO"/>
+	</resultMap>
+	
+	<select id="selectMypage" resultMap="mypageMber">
+		SELECT 
+		    CST_NO
+		    , MBER_ID
+		    , MBER_ADDR
+		    , MBER_MBTI
+		    , CST_NM
+		    , CST_HP
+		    , CST_BIRTH
+		    , CST_MAIL
+		    , MBS_GRD_CD
+		    , CPN_NO
+		    , CPN_ISSU_YMD
+		    , CPN_EXPRT_YMD
+		    , CPN_AVAIL_YN
+		    , CPN_USE_YMD
+		    , (SELECT 
+		    	SUM(CASE WHEN MLG_USE_CD = 'ADD' THEN MLG_AMNT ELSE 0 END) 
+	    		FROM tb_mileage 
+	    	WHERE CST_NO = #{cstNo})
+		    	+
+    		(SELECT 
+    			SUM(CASE WHEN MLG_USE_CD = 'USE' THEN -MLG_AMNT ELSE 0 END) 
+   				FROM TB_MILEAGE 
+   				WHERE CST_NO = #{cstNo}) AS MBER_MILEAGE
+		FROM
+		    TB_MBER 
+		INNER JOIN 
+		    TB_CSTMR USING (CST_NO)
+		LEFT OUTER JOIN 
+		    TB_COUPON_ISN USING (CST_NO)
+		LEFT OUTER JOIN
+		    TB_MBRSH_SETLE USING (CST_NO)
+		WHERE 
+		    CST_NO = #{cstNo}
+			AND (
+				SYSDATE BETWEEN MBS_SBSCRB_YMD AND MBS_EXPRT_YMD
+				OR MBS_SETLE_NO IS NULL)				
+	</select>
+	<select id="selectCouponCnt" resultType="MberVO">
+		SELECT 
+		    CST_NO
+		    , NVL(COUNT(CPN_AVAIL_YN),0) AS TOTAL_COUPON
+		    , NVL(SUM(CASE WHEN CPN_AVAIL_YN = 'Y' THEN 1 ELSE 0 END),0) AS AVAIL_COUPON
+		    , NVL(SUM(CASE WHEN CPN_AVAIL_YN = 'N' THEN 1 ELSE 0 END),0) AS UN_AVAIL_COUPON
+		    , NVL(SUM(CASE WHEN CPN_AVAIL_YN = 'U' THEN 1 ELSE 0 END),0) AS USED_COUPON
+		FROM TB_CSTMR LEFT OUTER JOIN TB_COUPON_ISN USING (CST_NO)
+		WHERE CST_NO = #{cstNo}
+		GROUP BY CST_NO
+	</select>
 </mapper>

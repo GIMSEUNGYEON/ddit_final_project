@@ -6,7 +6,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/cstmr/rsvt/rsvtList.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/common/btn.css" rel="stylesheet">
 <section>
 	<div class="container">
 		<div class="mt-8 container text-center">

@@ -1,9 +1,6 @@
 package kr.or.ddit.cstmr.rsvt.service;
 
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.stereotype.Service;
 
 import kr.or.ddit.global.vo.CstmrVO;
 import kr.or.ddit.global.vo.MberVO;

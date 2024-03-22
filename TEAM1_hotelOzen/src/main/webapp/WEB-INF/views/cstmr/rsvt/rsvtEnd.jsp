@@ -5,9 +5,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <link
-	href="${pageContext.request.contextPath}/resources/css/common/btn.css"
-	rel="stylesheet">
-<link
 	href="${pageContext.request.contextPath}/resources/css/cstmr/rsvt/rsvtEnd.css"
 	rel="stylesheet">
 <section>

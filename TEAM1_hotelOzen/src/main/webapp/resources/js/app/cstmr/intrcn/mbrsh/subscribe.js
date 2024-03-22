@@ -4,6 +4,10 @@
 
 const cPath = document.body.dataset.contextPath;
 
+let section = document.querySelector('section');
+
+let mbsGrdCd = section.classList[0];
+
 let today = new Date();
 
 subDay.innerHTML =  today.toLocaleDateString();
@@ -33,7 +37,7 @@ submitForm.addEventListener("submit", ()=>{
 	}).then(jsonObj=>{
 		console.log(jsonObj);
 		if(jsonObj['message'].includes("ok")){
-			window.location.href=`${cPath}/mbrsh/subDone`;
+			window.location.href=`${cPath}/mbrsh/subDone/${mbsGrdCd}`;
 		}else {
 			
 		}

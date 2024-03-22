@@ -4,7 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <link href="${pageContext.request.contextPath}/resources/css/error/error.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/common/btn.css" rel="stylesheet">
 
 <div class="mx-5">
 	<h1 class="error-title">500 INTERNAL SERVER ERROR</h1>

@@ -4,5 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-
-couponList
+<div class="mypage-detail-title">
+	쿠폰 목록 조회 페이지
+</div>

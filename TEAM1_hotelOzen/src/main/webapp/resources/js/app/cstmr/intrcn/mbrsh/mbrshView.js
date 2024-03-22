@@ -2,7 +2,8 @@
  * 
  */
 
-function layerPopUp(){
+function layerPopUp(buttonId){
+	console.log(buttonId)
 	layerPop2.style.display = "block";
 	dimmed.style.display = "block";
 }

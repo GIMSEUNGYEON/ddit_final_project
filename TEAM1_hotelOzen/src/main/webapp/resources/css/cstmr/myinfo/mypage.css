@@ -123,7 +123,6 @@ ul, ol {
 
 .myAccountInfo dd span {
     position: relative;
-    padding-right: 29px;
     font: 500 36px playfair, JungChul !important;
     letter-spacing: .05em;
     font-feature-settings: 'lnum','pnum';

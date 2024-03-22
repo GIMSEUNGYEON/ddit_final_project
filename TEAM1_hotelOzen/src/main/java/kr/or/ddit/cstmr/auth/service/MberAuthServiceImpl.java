@@ -51,10 +51,6 @@ public class MberAuthServiceImpl implements MberAuthService {
 
 			int cstmrInsert = cstDao.insertCstmr(newMber);
 			log.info("cstmrInsert : " + cstmrInsert);
-//			newMber = null;
-//			if(1==1) {
-//				throw new RuntimeException();
-//			}
 			int mberInsert = dao.insertMber(newMber);
 			log.info("mberInsert : " + mberInsert);
 			

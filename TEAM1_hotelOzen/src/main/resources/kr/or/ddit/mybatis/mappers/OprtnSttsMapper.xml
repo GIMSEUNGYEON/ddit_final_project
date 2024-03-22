@@ -40,7 +40,6 @@
 				    , RQST_SE       
 				    , EMP_RQ_NO     
 				    , EMP_PURCHS_NO 
-				    , RQST_SN       
 				    , RQST_RQ_YMD
 				    , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = TB_FXTRS_RQST.EMP_NO) EMP_NM
 		            , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = TB_FXTRS_RQST.EMP_RQ_NO) EMP_RQ_NM

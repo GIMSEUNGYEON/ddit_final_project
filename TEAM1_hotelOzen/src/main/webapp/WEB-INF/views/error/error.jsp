@@ -10,8 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${pageContext.request.contextPath}/resources/css/error/error.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/common/btn.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/error/error.css" rel="stylesheet">
 <style> 
 	body {
 	background-size: cover;
@@ -24,7 +24,7 @@
 <body>
 <div class="error-body justify-content-center text-center">
 	<tiles:insertAttribute name="contentPage"/>
-			<button class="custom-btn btn-1 home-btn" onclick="location.href='${pageContext.request.contextPath}/'">HOME</button>
+	<button class="custom-btn btn-1 home-btn" onclick="location.href='${pageContext.request.contextPath}/'">HOME</button>
 </div>
 
 

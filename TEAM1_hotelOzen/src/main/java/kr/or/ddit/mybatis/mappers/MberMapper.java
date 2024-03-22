@@ -24,4 +24,7 @@ public interface MberMapper extends AbstractCommonMapper<MberVO, String>{
 
 	public MberVO selectSubscriber(String cstNo);
 	
+	public MberVO selectMypage(String cstNo);
+	
+	public MberVO selectCouponCnt(String cstNo);
 }

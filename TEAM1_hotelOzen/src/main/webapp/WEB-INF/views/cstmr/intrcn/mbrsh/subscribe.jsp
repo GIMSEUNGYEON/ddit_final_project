@@ -12,7 +12,7 @@
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-<section class="mbsGrdCd">
+<section class="${mbrsh.mbsGrdCd }">
 	<div>
 		<div class="notice-header">
 			<h1 class="cstmr-title mx-6">MEMBERSHIP</h1>
@@ -140,6 +140,8 @@
 	</form:form>
 </section>
 <script type="text/javascript">
+	
+	
 	
 	IMP.init('imp84350861');
 	

@@ -98,4 +98,11 @@
 		FROM CPN_PRV_CNT_RECURSIVE
 		]]>
 	</select>
+	
+	<select id="selectMbrshList" resultType="MbrshGrdVO">
+		SELECT
+		    MBS_GRD_CD
+		    , MBS_GRD_NM
+		FROM TB_MBRSH_GRD
+	</select>
 </mapper>

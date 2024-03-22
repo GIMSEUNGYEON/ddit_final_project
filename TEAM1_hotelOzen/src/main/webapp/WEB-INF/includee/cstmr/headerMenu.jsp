@@ -113,8 +113,8 @@
 							<!-- icon1=맑음 // icon2=구름 icon3=흐림 icon4=비 icon5=눈 icon6=천둥 -->
 							<div class="weather_box d-flex">
 								<span class="Jejutemp mx-3"></span>
-								<i class="JejuIcon"></i>
 								<span class="Jejudust mx-3">미세먼지</span>
+								<i class="JejuIcon"></i>
 							</div>
 						</div>
 					</div>

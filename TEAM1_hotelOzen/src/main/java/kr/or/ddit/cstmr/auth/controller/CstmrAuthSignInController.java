@@ -39,11 +39,20 @@ public class CstmrAuthSignInController {
 	}
 	
 	
+	/**
+	 * 회원가입 페이지 접근
+	 * @return
+	 */
 	@GetMapping("join.do")
 	public String singIn() {
 		return "cstmr/auth/join";
 	}
 
+	/**
+	 * 아이디 중복 확인 컨트롤러
+	 * @param mberId
+	 * @return
+	 */
 	@PostMapping(value = "idvalid.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> idValidateProcess(
 		@RequestBody Map<String, String> mberId
@@ -70,6 +79,14 @@ public class CstmrAuthSignInController {
 		
 	}
 	
+	/**
+	 * 회원가입 검증 컨트롤러
+	 * @param newMber
+	 * @param errors
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("join.do")
 	public String signInProcess(
 		@Validated(InsertGroup.class) @ModelAttribute("newMber") RegistVO newMber
@@ -114,6 +131,12 @@ public class CstmrAuthSignInController {
 		}
 		return logicaViewName;
 	}
+	
+	
+	/**
+	 * 회원가입 성공 페이지 이동 컨트롤러
+	 * @return
+	 */
 	@GetMapping("joinComplete.do")
 	public String joinDonePage(
 	) {

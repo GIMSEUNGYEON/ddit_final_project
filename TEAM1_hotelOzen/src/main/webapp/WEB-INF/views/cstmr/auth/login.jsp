@@ -10,7 +10,9 @@
 		</div>
 	<hr class="mx-8">
 	</div>
-	<div class="g-3 mx-10 container row justify-content-center">
+	<div class="text-center d-flex justify-content-center">
+
+	<div class="g-3 container row justify-content-center">
 	<div class="p-4 p-sm-5 col-md-6 ">
 		<div class="d-flex justify-content-between align-items-center mb-2 ">
 		</div>	
@@ -56,6 +58,7 @@
 				<div class="divider-content-center">caution</div>
 			</div>
 		</form:form>
+	</div>
 	</div>
 	</div>
 	<hr class="mx-8">

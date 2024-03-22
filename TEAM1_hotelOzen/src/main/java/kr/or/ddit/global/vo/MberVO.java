@@ -29,4 +29,11 @@ public class MberVO implements Serializable {
 	private CstmrVO cst;
 	
 	private List<MbrshSetleVO> mbrsh;
+	
+	private List<CouponVO> couponList;
+	
+	private int totalCoupon;
+	private int availCoupon;
+	private int unAvailCoupon;
+	private int usedCoupon;
 }

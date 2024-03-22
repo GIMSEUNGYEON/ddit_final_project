@@ -1,15 +1,12 @@
 package kr.or.ddit.emp.pms.roomsvc.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +19,7 @@ import kr.or.ddit.global.common.paging.BootstrapFormBasePaginationRenderer;
 import kr.or.ddit.global.common.paging.PaginationInfo;
 import kr.or.ddit.global.common.paging.PaginationRenderer;
 import kr.or.ddit.global.common.paging.SearchCondition;
-import kr.or.ddit.global.vo.ChkinVO;
 import kr.or.ddit.global.vo.RmSvcOrderVO;
-import kr.or.ddit.global.vo.RmserviceDetailsVO;
 import kr.or.ddit.global.vo.RmserviceOrderVO;
 import kr.or.ddit.global.vo.RmserviceVO;
 import lombok.extern.slf4j.Slf4j;

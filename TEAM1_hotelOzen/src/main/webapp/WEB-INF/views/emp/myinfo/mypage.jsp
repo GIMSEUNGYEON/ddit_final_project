@@ -29,10 +29,6 @@
                 </li>
 
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-paystub" aria-selected="false" tabindex="-1" role="tab">급여명세서 조회</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-dclzList" aria-selected="false" tabindex="-1" role="tab">근태 조회</button>
                 </li>
 
@@ -198,15 +194,6 @@
                   </form:form>
                   <!-- End Change Password Form -->
 
-                </div>
-
-                <div class="tab-pane fade" id="profile-paystub" role="tabpanel">
-                  <h5 class="card-title">Pay Stub</h5>
-	                <div class="ratio ratio-16x9">
-						<object data="${pageContext.request.contextPath}/resources/assets/test.pdf" type="application/pdf" width="100%" height="600px">
-	   					 <p>이 브라우저는 PDF 파일을 지원하지 않습니다. <a href="${pageContext.request.contextPath}/resources/assets/test.pdf">다운로드</a>하세요.</p>
-						</object>
-	                </div>
                 </div>
 
                 <div class="tab-pane fade row flex-center" id="profile-dclzList" role="tabpanel">

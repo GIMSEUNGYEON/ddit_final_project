@@ -18,4 +18,7 @@ public interface MbrshMapper {
 	public MbrshGrdVO selectOne(String grd);
 	
 	public List<MbrshBnfVO> selectCouponList(String grd);
+
+	public List<MbrshGrdVO> selectMbrshList();
+	
 }

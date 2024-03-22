@@ -31,12 +31,15 @@
 			<div class="d-flex b-class justify-content-center mt-6">
 				<div class="">
 					<img src='<c:url value="/resources/assets/img/mbrsh/B${mbsGrdCd }.png"/>' class="mbrsh-card" />
-					<div class="row">
+					<div class="row mt-3">
 						<div class="col-md-5 card-tax">
 							<p class="mt-4 mbsGrdNm">${mbsGrdList[0].mbsGrdCd }</p>
 							<p class="mbsGrdAmnt"><fmt:formatNumber value="${mbsGrdList[0].mbsGrdAmnt }" pattern="#,###" />KRW</p>
+							<p><button type="button" class="btnLine" onclick="layerPopUp(this.id)" id="B${mbsGrdCd }">
+			                      more details
+		                      </button></p>
 						</div>
-						<div class="col-md-6 text-center">
+						<div class="col-md-6">
 	                    <button class="custom-btn btn-6 mt-4" onclick="subLocate(event);" id="${mbsGrdList[0].mbsGrdCd }">
 	                    <span>
 		                	 구매
@@ -45,7 +48,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="benetfitPrev">
+				<div class="benetfitPrev" style="margin-right: 0px; margin-top: 60px;">
                     <div class="benetfitPrevList">
                         <span class="tit">객실 숙박권</span>
                         <strong class="tax">
@@ -74,9 +77,9 @@
 			</div>
 			
 			
-			<div class="b-class">
+			<div class="b-classmt-5 d-flex justify-content-center" style="display: flex; justify-content: center;"mt-5 d-flex justify-content-center" style="display: flex; justify-content: center;">
 				<div class="d-flex second-mbrsh">
-				<div class="benetfitPrev">
+				<div class="benetfitPrev" style="margin-left: 0px; margin-top: 60px;">
                     <div class="benetfitPrevList">
                         <span class="tit">객실 숙박권</span>
                         <strong class="tax">
@@ -104,12 +107,15 @@
                 </div>				
 				<div class="second-card">
 					<img src='<c:url value="/resources/assets/img/mbrsh/L${mbsGrdCd }.png"/>' class="mbrsh-card" />
-					<div class="row">
+					<div class="row mt-3">
 						<div class="col-md-5 card-tax">
 							<p class="mt-4 mbsGrdNm">${mbsGrdList[1].mbsGrdCd }</p>
 							<p class="mbsGrdAmnt"><fmt:formatNumber value="${mbsGrdList[1].mbsGrdAmnt }" pattern="#,###" />KRW</p>
+							<p><button type="button" class="btnLine" onclick="layerPopUp(this.id)" id="L${mbsGrdCd }">
+			                      more details
+		                      </button></p>						
 						</div>
-						<div class="col-md-6 text-center">
+						<div class="col-md-6">
 	                    <button class="custom-btn btn-6 mt-4" onclick="location.href='${pageContext.request.contextPath}/mbrsh/subscribe/${mbsGrdList[0].mbsGrdCd }'">
 	                    <span>
 		                	 구매
@@ -122,15 +128,18 @@
 			</div>
 			
 			
-			<div class="d-flex b-class">
+			<div class="d-flex b-class  mt-5 justify-content-center" style="display: flex; justify-content: center;">
 				<div class="">
 					<img src='<c:url value="/resources/assets/img/mbrsh/D${mbsGrdCd }.png"/>' class="mbrsh-card" />
-					<div class="row">
+					<div class="row mt-3">
 						<div class="col-md-5 card-tax" >
 							<p class="mt-4 mbsGrdNm">${mbsGrdList[2].mbsGrdCd }</p>
 							<p class="mbsGrdAmnt"><fmt:formatNumber value="${mbsGrdList[2].mbsGrdAmnt }" pattern="#,###" />KRW</p>
+							<p><button type="button" class="btnLine" onclick="layerPopUp(this.id)" id="D${mbsGrdCd }">
+			                      more details
+		                      </button></p>						
 						</div>
-						<div class="col-md-6 text-center">
+						<div class="col-md-6">
 	                    <button class="custom-btn btn-6 mt-4" onclick="location.href='${pageContext.request.contextPath}/mbrsh/subscribe/${mbsGrdList[0].mbsGrdCd }'">
 	                    <span>
 		                	 구매
@@ -139,7 +148,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="benetfitPrev">
+				<div class="benetfitPrev" style="margin-right: 0px; margin-top: 60px;">
                     <div class="benetfitPrevList">
                         <span class="tit">객실 숙박권</span>
                         <strong class="tax">
@@ -168,9 +177,7 @@
 			</div>
 		</div>
 	</div>
-	<button onclick="layerPopUp()">
-		 클릭
-	</button>
+
 </section>
 
 <div id="layerPop1" class="layerPop" style="display: none;">

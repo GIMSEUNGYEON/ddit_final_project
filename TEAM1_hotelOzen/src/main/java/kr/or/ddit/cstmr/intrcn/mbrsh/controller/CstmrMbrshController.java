@@ -3,9 +3,12 @@ package kr.or.ddit.cstmr.intrcn.mbrsh.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import kr.or.ddit.cstmr.intrcn.mbrsh.service.CstmrMbrshService;
 import kr.or.ddit.enumpkg.ServiceResult;
@@ -29,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/mbrsh")
 public class CstmrMbrshController {
+	
+	MbrshSetleVO seltleVO;
 	
 	@Inject
 	CstmrMbrshService service;
@@ -74,8 +80,22 @@ public class CstmrMbrshController {
 		
 		MbrshGrdVO mbrsh = service.retrieveOneMbrsh(mbsGrdCd);
 		
+		List<MbrshGrdVO> mbrshList = service.retrieveAllMbrshList();
+		
+		AtomicBoolean found = new AtomicBoolean(false);
+		
+		mbrshList.forEach(m->{
+			if(m.getMbsGrdCd().equals(mbsGrdCd)) {
+				found.set(true);
+				return;
+			}
+		});
+		if(!found.get()) {
+			throw new ResponseStatusException(HttpStatus.SC_NOT_FOUND, "Requested resource not found", null);
+		}
+		
 		if(mbrsh == null) {
-			throw new RuntimeException();
+			throw new ResponseStatusException(HttpStatus.SC_NOT_FOUND, "Requested resource not found", null);
 		}
 		
 		model.addAttribute("mbsGrdCd", mbsGrdCd);
@@ -83,7 +103,7 @@ public class CstmrMbrshController {
 		model.addAttribute("mbrsh",mbrsh);
 		
 		model.addAttribute("realUser", realUser);
-		
+
 		return "cstmr/intrcn/mbrsh/subscribe";
 	}
 
@@ -112,11 +132,46 @@ public class CstmrMbrshController {
 			break;
 		}
 		
+		seltleVO = mbrshSetleVO;
+		
 		return jsonData;
 	}
 	
-	@GetMapping("subDone")
-	public String subDone() {
+	@GetMapping("subDone/{mbsGrdCd}")
+	public String subDone(
+		@PathVariable String mbsGrdCd
+		, @MberUser MberVO user
+		, Model model
+		, HttpSession session
+		
+	) {
+		if(session.isNew()) {
+			throw new ResponseStatusException(HttpStatus.SC_NOT_FOUND, "Requested resource not found", null);
+		}
+		
+		List<MbrshGrdVO> mbrshList = service.retrieveAllMbrshList();
+		
+		AtomicBoolean found = new AtomicBoolean(false);
+		
+		mbrshList.forEach(m->{
+			if(m.getMbsGrdCd().equals(mbsGrdCd)) {
+				found.set(true);
+				return;
+			}
+		});
+		if(!found.get()) {
+			throw new ResponseStatusException(HttpStatus.SC_NOT_FOUND, "Requested resource not found", null);
+		}
+		
+		
+		MberVO realUser = service.retrieveSubscriber(user.getCstNo());
+		
+		model.addAttribute("mbsGrdCd", mbsGrdCd);
+		
+		model.addAttribute("realUser", realUser);
+
+		model.addAttribute("seltleVO", seltleVO);
+		
 		
 		
 		return "cstmr/intrcn/mbrsh/subDone";

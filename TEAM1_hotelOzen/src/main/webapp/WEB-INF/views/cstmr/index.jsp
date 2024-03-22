@@ -5,6 +5,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!-- 멤버십 추천 CSS -->
+<link href="${pageContext.request.contextPath }/resources/vendors/swiper/swiper-bundle.min.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/resources/css/emp/crm/cstmr/cstmrMembsh.css" rel="stylesheet" />
+<!-- 멤버십 추천 CSS 끝-->
+
 <style>
 .s0 {
 	background-size: cover;
@@ -13,9 +18,6 @@
 	background-color: black;
 }
 </style>
-<link
-	href="${pageContext.request.contextPath}/resources/css/common/btn.css"
-	rel="stylesheet">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cstmr/index.css">
 <script defer
@@ -254,6 +256,51 @@
 	</footer>
 </div>
 
+<!-- 멤버십 추천 팝업 -->
+
+<c:if test="${ not empty vo}">
+	<div class="modal modal_frame" id="myModal" tabindex="-1" role="dialog">
+	    <div class="modal-dialog modal-80size" role="document">
+	        <div class="modal-content modal-80size">
+	            <div class="modal-header">
+	                <span class="membsh-title-span">Membership Recommendation</span>
+	                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <h6 class="explain"><span class="membsh-span">${cstNm }</span> 고객님께 추천드리는 3가지 멤버십입니다.</h6>
+	                <h6 class="explain">멤버십은 <span class="membsh-span">호텔 사용 내역</span>을 바탕으로 추천됩니다.</h6>
+	                <div class="mbrshContainer">
+					    <div class="swiper-container theme-slider" data-swiper='{"autoplay":true,"spaceBetween":1,"loop":true,"loopedSlides":1,"slideToClickedSlide":true}'>
+					      <div class="swiper-wrapper">
+					        <div class="swiper-slide">
+					        <a href='<c:url value="/mbrsh" />'><img class="rounded-1 img-fluid" src="<c:url value='/resources/assets/img/mbrsh/${vo.recomMbrsh1 }.png'/>" alt="${vo.recomMbrsh1}" /></a></div>
+					        <div class="swiper-slide">
+					        <a href='<c:url value="/mbrsh" />'>
+					        <img class="rounded-1 img-fluid" src="<c:url value='/resources/assets/img/mbrsh/${vo.recomMbrsh2 }.png'/>" alt="${vo.recomMbrsh2}" /></a>
+					        </div>
+					        <div class="swiper-slide">
+					        <a href='<c:url value="/mbrsh" />'>
+					        <img class="rounded-1 img-fluid" src="<c:url value='/resources/assets/img/mbrsh/${vo.recomMbrsh3 }.png'/>" alt="${vo.recomMbrsh3}" /></a>
+					        </div>
+					      </div>
+
+					    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+		            <div class="checkbox">
+			            <input type="checkbox" id="myCheckbox" name="myCheckbox">
+						<label class="check-label" for="myCheckbox">오늘은 그만 보기</label>
+		            </div>
+	                <button type="button" class="btn btn-dark" id="modal-end" data-dismiss="modal">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</c:if>
+
+<!-- 멤버십 추천 팝업 종료 -->
+
 
 <script>
 	$(function() {
@@ -278,3 +325,10 @@
 		});
 
 </script>
+
+<!-- 멤버십 추천 js -->
+<script src="<c:url value='/resources/js/app/emp/crm/cstmr/cstmrMembsh.js'/>"></script>
+<script src="${pageContext.request.contextPath }/resources/vendors/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- 멤버십 추천 js 끝-->
