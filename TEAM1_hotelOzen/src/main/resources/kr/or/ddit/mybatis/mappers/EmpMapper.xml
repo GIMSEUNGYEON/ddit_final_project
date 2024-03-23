@@ -42,7 +42,7 @@
 			, EMP_ANNUAL_LEAVE
 			, EMP_BIRTH
 		FROM TB_EMP
-		WHERE EMP_NO = #{empNo}		
+		WHERE EMP_NO = #{empNo}
 	</select>
 	
 	<select id="selectList" resultType="EmpVO">

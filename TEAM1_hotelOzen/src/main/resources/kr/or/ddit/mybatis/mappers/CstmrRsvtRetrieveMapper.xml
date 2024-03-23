@@ -24,6 +24,8 @@
 				 INNER JOIN TB_RSVT_DETAILS USING (RSVT_NO)
     WHERE RSVT_NO = #{rsvt[0].rsvtNo}
 			AND CST_HP = #{cstHp}
+			AND RSVT_CNCL_YN = 'N'
+			AND RSVT_CHECKOUT_YMD <![CDATA[ >= ]]> SYSDATE
 	GROUP BY RSVT_NO
 			, CST_NO
 			, RSVT_AMNT
@@ -56,17 +58,18 @@
 	FROM TB_RSVT INNER JOIN TB_RSVT_DETAILS USING (RSVT_NO)
 				 INNER JOIN TB_CSTMR USING (CST_NO)
 				 INNER JOIN TB_ROOM_TYPE USING (RMT_TYPE_CD)
-	<![CDATA[
+	
 	WHERE 
 		RSVT_NO = #{rsvtNo} 
-		AND RSVT_CHECKIN_YMD >= SYSDATE
+		AND RSVT_CHECKOUT_YMD <![CDATA[ >= ]]> SYSDATE
 		AND RSVT_CNCL_YN = 'N'
 	ORDER BY RSVT_CHECKIN_YMD
-	]]>
+	
 </select>
 <select id="selectMberRsvtList" parameterType="CstmrVO" resultType="RsvtVO">
 	SELECT 
 		RSVT_NO
+		, CST_NO
 		, RSVT_AMNT
 		, RSVT_YMD
 		, RSVT_CHECKIN_YMD
@@ -75,11 +78,12 @@
 		, RSVT_ROOM_CNT
 		, RSVT_ADULT_CNT
 		, RSVT_CHILD_CNT
+		, RSVT_SETLE_NO
 	FROM TB_RSVT INNER JOIN TB_CSTMR USING (CST_NO)
 	<![CDATA[
     WHERE 
     	CST_NO = #{cstNo} 
-    	AND RSVT_CHECKIN_YMD >= SYSDATE
+    	AND RSVT_CHECKIN_YMD >= SYSDATE-1
     	AND RSVT_CNCL_YN = 'N'
 	ORDER BY RSVT_CHECKIN_YMD
 	]]>
@@ -207,17 +211,17 @@
 	ORDER BY RSVT_CHECKIN_YMD
 	]]>
 </select>
-<update id="rsvtCancel" parameterType="String">
+<update id="rsvtCancel" parameterType="RsvtVO">
 	UPDATE TB_RSVT
 		SET RSVT_CNCL_YN = 'Y'
 	WHERE RSVT_NO = #{rsvtNo}
 </update>
-<update id="updateSetle">
+<update id="updateSetle" parameterType="RsvtVO">
 	UPDATE TB_SETLE
 		SET SETLE_STTUS_CD = 'C'
 	WEHRE SETLE_NO = #{setleNo}
 </update>
-<insert id="insertRefnd">
+<insert id="insertRefnd" parameterType="RefndVO">
 	INSERT INTO TB_REFND(
 		REFND_NO
 		, SETLE_NO
@@ -229,11 +233,11 @@
 	)VALUES(
 		#{refndNo}
 		, #{setleNo}
-		, #{refndPlcyNo}
-		, #{refndCncdeYmd}
+		, 'RFND1'
+		, SYSDATE
 		, #{refndAmnt}
-		, #{refndYmd}
-		, #{refndSttus}
+		, SYSDATE
+		, 'Y'
 	)
 </insert>
 <select id="selectNewRefndNo">

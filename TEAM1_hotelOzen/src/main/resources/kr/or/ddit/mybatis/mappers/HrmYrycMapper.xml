@@ -61,7 +61,7 @@
 		<include refid="searchFrag" />
 	</select>
 
-	<select id="selectList" resultType="AnnualVO" parameterType="PaginationInfo">
+	<select id="selectList" resultType="HrmAnnualVO" parameterType="PaginationInfo">
 		WITH RNUMYRYC AS (	
 			SELECT 
 				ROWNUM RNUM, A.*
@@ -77,8 +77,13 @@
 					, EMP_RQ_NO
 					, RQST_SE
 					, RQST_PURCHS_YMD
+					, ANL_LEA_GIVE_YMD
+                    , ANL_LEA_GIVE_AMNT
+                    , EMP_ANNUAL_LEAVE
 				FROM
 					TB_ANNUAL_LEAVE_USE
+						LEFT OUTER JOIN TB_ANNUAL_LEAVE_GIVE USING (EMP_NO)
+                        LEFT OUTER JOIN TB_EMP USING (EMP_NO)
 				<include refid="searchFrag" />
 				ORDER BY 
 					ANL_LEA_USE_NO DESC

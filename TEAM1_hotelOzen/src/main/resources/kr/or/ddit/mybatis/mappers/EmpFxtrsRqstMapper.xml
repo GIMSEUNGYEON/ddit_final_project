@@ -175,11 +175,13 @@
 			EMP_NO = #{empRqNo}
 	</select>
 	
-	<update id="updateFxtrsApproval" parameterType="String">
+	<update id="updateFxtrsApproval" parameterType="Map">
 		UPDATE 
 			TB_FXTRS_RQST
 		SET
 		    RQST_SE = '구매대기'
+		    , RQST_RQ_YMD = SYSDATE
+   		    , EMP_PURCHS_NO = #{rqstPurchs}
 		WHERE
 		    RQST_NO = #{fxRqstNo}
 	</update>
@@ -189,7 +191,17 @@
 			TB_FXTRS_RQST
 		SET
 		    RQST_SE = '반려'
+		    , RQST_RQ_YMD = SYSDATE
 		WHERE
 		    RQST_NO = #{fxRqstNo}
 	</update>
+	
+	<select id="selectRqstPurchs" resultType="String">
+		SELECT 
+		    EMP_NO
+		FROM 
+			TB_EMP 
+		WHERE 
+			EMP_DEPT = 'POS' AND EMP_JBGD = 'DPM'
+	</select>
 </mapper>

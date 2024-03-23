@@ -194,6 +194,10 @@
 		    , CPN_EXPRT_YMD
 		    , CPN_AVAIL_YN
 		    , CPN_USE_YMD
+		    , CPNK_NO
+		    , CPNK_NM
+		    , CPN_USE
+		    , CPN_DSCNT_PRICE
 		    , (SELECT 
 		    	SUM(CASE WHEN MLG_USE_CD = 'ADD' THEN MLG_AMNT ELSE 0 END) 
 	    		FROM tb_mileage 
@@ -211,6 +215,8 @@
 		    TB_COUPON_ISN USING (CST_NO)
 		LEFT OUTER JOIN
 		    TB_MBRSH_SETLE USING (CST_NO)
+		LEFT OUTER JOIN
+			TB_COUPON USING (CPNK_NO)
 		WHERE 
 		    CST_NO = #{cstNo}
 			AND (
@@ -227,5 +233,20 @@
 		FROM TB_CSTMR LEFT OUTER JOIN TB_COUPON_ISN USING (CST_NO)
 		WHERE CST_NO = #{cstNo}
 		GROUP BY CST_NO
+	</select>
+	
+	<select id="selectMileageList" resultType="MileageVO">
+       SELECT
+		    CST_NO
+		  , MLG_YMD
+		  , MLG_AMNT
+		  , DECODE(MLG_USE_CD, 'ADD', '추가', 'USE', '사용') AS MLG_USE_CD
+		  , MLG_SORT
+		FROM
+		    TB_MILEAGE
+		WHERE
+			CST_NO = #{cstNo}
+		ORDER BY 
+			MLG_YMD DESC
 	</select>
 </mapper>
