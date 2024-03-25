@@ -20,8 +20,9 @@ class MberMapperTest extends AbstractRootContextTest {
 	@Test
 	public void selectTest() {
 		log.info("{}", dao);
-		MberVO vo = dao.select("M2400001");
+		MberVO vo = dao.select("M1800005");
 		assertNotNull(vo);
+		log.info("{}", vo);
 	}
 
 	@Test

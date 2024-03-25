@@ -35,7 +35,7 @@
 						<div class="col-md-5 card-tax">
 							<p class="mt-4 mbsGrdNm">${mbsGrdList[0].mbsGrdCd }</p>
 							<p class="mbsGrdAmnt"><fmt:formatNumber value="${mbsGrdList[0].mbsGrdAmnt }" pattern="#,###" />KRW</p>
-							<p><button type="button" class="btnLine" onclick="layerPopUp(this.id)" id="B${mbsGrdCd }">
+							<p><button type="button" class="btnLine" onclick="layerPopUp(this.name)" name="B${mbsGrdCd }">
 			                      more details
 		                      </button></p>
 						</div>

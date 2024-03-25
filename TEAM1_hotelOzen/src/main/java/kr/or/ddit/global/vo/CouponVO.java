@@ -14,6 +14,7 @@ public class CouponVO {
 	private String cstNo;
 	private String cpnkNm;
 	private String cpnUse;
+	private int cpnPrvCnt;
 	private Integer cpnDscntPrice;
 	private LocalDate cpnIssuYmd;
 	

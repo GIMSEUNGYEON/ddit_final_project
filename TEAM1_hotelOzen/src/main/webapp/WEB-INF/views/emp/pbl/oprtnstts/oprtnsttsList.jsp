@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <link href="${pageContext.request.contextPath}/resources/css/emp/pbl/oprtnstts/oprtnstts.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/emp/pagingCss.css" rel="stylesheet">
 
@@ -21,8 +22,10 @@
 				<div class="tabcontent">
 				    <input type="radio" name="tab" checked id="tabmenu01">
 				    <label for="tabmenu01">연차</label>
-				    <input type="radio" name="tab" id="tabmenu02">
-				    <label for="tabmenu02">비품</label>
+				    <security:authorize access="hasAnyRole('ROLE_HKP', 'ROLE_POS')">
+					    <input type="radio" name="tab" id="tabmenu02">
+					    <label for="tabmenu02">비품</label>
+				    </security:authorize>
 				  
 				  <!-- 연차탭 -->
 				    <div class="content-box content01">

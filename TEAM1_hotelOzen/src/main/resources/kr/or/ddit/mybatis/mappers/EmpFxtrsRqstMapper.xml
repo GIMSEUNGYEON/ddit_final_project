@@ -157,6 +157,7 @@
 		    , FX_RQST_CNT
 		    , FX_UNIT
 		    , FX_RQST_TOTALAMNT
+		    , RQST_RQ_YMD
 		FROM 
 			TB_FXTRS_RQST
 			INNER JOIN TB_EMP USING (EMP_NO)
@@ -204,4 +205,20 @@
 		WHERE 
 			EMP_DEPT = 'POS' AND EMP_JBGD = 'DPM'
 	</select>
+	
+	<insert id="insertFxtrsAlram" parameterType="EmpAlramVO">
+		INSERT INTO TB_EMP_ALRAM (
+		    SANCTN_NO
+		    , EMP_NO
+		    , READ_YN
+		    , MESSAGE
+		    , ALRAM_NO
+		) VALUES (
+		    #{rqstNo}
+		    , #{empNo}
+		    , 'N'
+		    , '결재요청건 존재'
+		    , EMPSCHDL_SEQ.NEXTVAL
+		)
+	</insert>
 </mapper>

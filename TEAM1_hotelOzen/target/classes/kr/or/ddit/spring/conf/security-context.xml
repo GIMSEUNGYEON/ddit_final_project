@@ -55,6 +55,9 @@
 		/>		
 		<csrf disabled="true"/>
 		<intercept-url pattern="/emp/auth/**" access="permitAll"/>
+		<intercept-url pattern="/emp/hrm/**" access="hasRole('ROLE_HRM')"/>
+		<intercept-url pattern="/emp/pms/**" access="hasAnyRole('ROLE_FTO', 'ROLE_HKP', 'ROLE_FMT')"/>
+		<intercept-url pattern="/emp/pos/**" access="hasRole('ROLE_POS')"/>
 		<intercept-url pattern="/emp/**" access="hasRole('ROLE_EMP')"/>
 	</http>
 	

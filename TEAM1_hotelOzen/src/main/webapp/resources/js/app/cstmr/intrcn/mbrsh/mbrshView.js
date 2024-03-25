@@ -2,8 +2,25 @@
  * 
  */
 
-function layerPopUp(buttonId){
-	console.log(buttonId)
+function layerPopUp(mbrGrdCd){
+	console.log(mbrGrdCd)
+	
+	fetch(`${cPath}/mbrsh/${mbrGrdCd}/detail`,{
+		method:"get",
+		headers:{
+			"Accept":"application/json"
+		}
+	}).then(resp=>{
+		if(resp.ok){
+			return resp.json();
+		}else{
+			throw new Error(`상태코드 ${resp.status}`, {cause:resp});
+		}
+	}).then(jsonObj=>{
+		console.log(jsonObj)
+		console.log(jsonObj.mbrsh)
+	})
+	
 	layerPop2.style.display = "block";
 	dimmed.style.display = "block";
 }

@@ -67,23 +67,27 @@
 				ROWNUM RNUM, A.*
 			FROM (
 				SELECT 
-					ANL_LEA_USE_NO
-					, EMP_NO
-					, ANL_LEA_BGN_YMD
-					, ANL_LEA_END_YMD
-					, ANL_LEA_RM
-					, ANL_LEA_INFO
-					, ANL_LEA_YMD
-					, EMP_RQ_NO
-					, RQST_SE
+					A.ANL_LEA_USE_NO
+					, A.EMP_NO
+					, A.ANL_LEA_BGN_YMD
+					, A.ANL_LEA_END_YMD
+					, (A.ANL_LEA_END_YMD - A.ANL_LEA_BGN_YMD) AS USE_DATE
+					, A.ANL_LEA_RM
+					, A.ANL_LEA_INFO
+					, A.ANL_LEA_YMD
+					, A.EMP_RQ_NO
+					, A.RQST_SE
 					, RQST_PURCHS_YMD
-					, ANL_LEA_GIVE_YMD
-                    , ANL_LEA_GIVE_AMNT
-                    , EMP_ANNUAL_LEAVE
+					, B.ANL_LEA_GIVE_YMD
+                    , B.ANL_LEA_GIVE_AMNT
+                    , (SELECT EMP_TEL FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_TEL
+                    , (SELECT EMP_DEPT FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_DEPT
+                    , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_NM
+                    , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = A.EMP_RQ_NO) AS EMP_RQ_NM
+                    , (SELECT EMP_ANNUAL_LEAVE FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_ANNUAL_LEAVE
 				FROM
-					TB_ANNUAL_LEAVE_USE
-						LEFT OUTER JOIN TB_ANNUAL_LEAVE_GIVE USING (EMP_NO)
-                        LEFT OUTER JOIN TB_EMP USING (EMP_NO)
+					TB_ANNUAL_LEAVE_USE A
+						LEFT OUTER JOIN TB_ANNUAL_LEAVE_GIVE B ON (A.EMP_NO = B.EMP_NO)
 				<include refid="searchFrag" />
 				ORDER BY 
 					ANL_LEA_USE_NO DESC

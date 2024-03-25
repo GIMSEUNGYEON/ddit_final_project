@@ -11,6 +11,9 @@
 		<collection property="userRoles" ofType="string">
 			<result column="USER_ROLE"/>
 		</collection>
+		<collection property="rsvtList" javaType="list" ofType="RsvtVO" autoMapping="true">
+			<id property="rsvtNo" column="RSVT_NO"/>
+		</collection>
 	</resultMap>
 	<select id="select" parameterType="string" resultMap="mberMap">
 		SELECT
@@ -30,13 +33,17 @@
 		  , CST_GEN
 		  , CST_BIRTH
 		  , CST_MAIL
-		  , MBS_GRD_CD
-		  , MBS_SBSCRB_YMD
-		  , MBS_EXPRT_YMD
+		  , RSVT_YMD
+		  , RSVT_NO
+		  , RSVT_CHECKIN_YMD
+		  , RSVT_CHECKOUT_YMD
+		  , RSVT_ROOM_CNT
+		  , RSVT_ADULT_CNT
+		  , RSVT_CHILD_CNT
 		FROM
 		    TB_MBER
 		    INNER JOIN TB_CSTMR USING (CST_NO)
-		    LEFT OUTER JOIN TB_MBER_MBRSH USING (CST_NO)
+		    LEFT OUTER JOIN TB_RSVT USING (CST_NO)
 		WHERE CST_NO = #{cstNo}	
 	</select>
 	
@@ -75,28 +82,32 @@
 		</collection>
 	</resultMap>
 	<select id="selectList" resultMap="mberListMap">
-		WITH ORDERD AS(
-			SELECT
-			    TB_MBER.CST_NO
-			  , TB_MBER.MBER_ID
-			  , TB_MBER.MBER_MBRSH_YN
-			  , TB_CSTMR.CST_NM
-			  , TB_CSTMR.CST_HP
-			  , TB_MBER_MBRSH.MBS_GRD_CD
-			  , TB_MBER_MBRSH.MBS_EXPRT_YMD
-			FROM
-			    TB_MBER
-			    INNER JOIN TB_CSTMR ON TB_MBER.CST_NO = TB_CSTMR.CST_NO
-			    LEFT OUTER JOIN TB_MBER_MBRSH ON (TB_MBER.CST_NO = TB_MBER_MBRSH.CST_NO)
-                AND TB_MBER_MBRSH.MBS_EXPRT_YMD > SYSDATE
-                WHERE TB_MBER.MBER_SECSN_YN IS NULL
-                ORDER BY tb_mber.mber_sbscrb_ymd DESC
-		   ), RNUMMEMBER AS(
-		      SELECT ORDERD.*, ROWNUM RNUM
-		      FROM ORDERD
-		   )
-		   SELECT *
-		   FROM RNUMMEMBER
+		WITH ORDERD AS (
+		    SELECT
+		        TB_MBER.CST_NO
+		        , TB_MBER.MBER_ID
+		        , TB_MBER.MBER_MBRSH_YN
+		        , TB_MBER.MBER_SBSCRB_YMD
+		        , TB_CSTMR.CST_NM
+		        , TB_CSTMR.CST_HP
+		        , TB_MBER_MBRSH.MBS_GRD_CD
+		        , TB_MBER_MBRSH.MBS_EXPRT_YMD
+		    FROM
+		        TB_MBER
+		        INNER JOIN TB_CSTMR ON TB_MBER.CST_NO = TB_CSTMR.CST_NO
+		        LEFT OUTER JOIN TB_MBER_MBRSH ON (TB_MBER.CST_NO = TB_MBER_MBRSH.CST_NO)
+	            AND TB_MBER_MBRSH.MBS_EXPRT_YMD > SYSDATE
+		    WHERE
+		        TB_MBER.MBER_SECSN_YN IS NULL
+		    ORDER BY
+		        TB_MBER.MBER_SBSCRB_YMD DESC
+		),
+		RNUMMEMBER AS (
+		    SELECT ORDERD.*, ROWNUM RNUM
+		    FROM ORDERD
+		)
+		SELECT *
+		FROM RNUMMEMBER
    </select>
    
 	<select id="selectMberByUserName" parameterType="string" resultMap="mberMap">
@@ -149,6 +160,19 @@
 		    AND CST_HP = #{cstHp}
 	</select>
 	
+	<update id="updateCst" parameterType="RegistVO">
+		UPDATE TB_CSTMR
+		SET CST_MAIL = #{cstMail}
+		WHERE CST_NO = #{cstNo}
+	</update>
+	<update id="updateMber" parameterType="RegistVO">
+		UPDATE TB_MBER
+		SET 
+			MBER_ADDR = #{mberAddr}
+			, MBER_MBTI = #{mberMbti}
+		WHERE CST_NO = #{cstNo}
+	</update>
+	
 	<update id="changePwd" parameterType="MberVO">
 		UPDATE TB_MBER
 		SET	MBER_PW = #{mberPw}
@@ -187,7 +211,9 @@
 		    , CST_NM
 		    , CST_HP
 		    , CST_BIRTH
-		    , CST_MAIL
+		    , SUBSTR(CST_MAIL, 1, INSTR(CST_MAIL, '@') - 1) AS CST_MAIL
+            , SUBSTR(CST_MAIL, INSTR(CST_MAIL, '@') + 1) AS MAIL_ADDR
+		    , DECODE(CST_GEN, 'F', 'FEMALE', 'M', 'MALE')
 		    , MBS_GRD_CD
 		    , CPN_NO
 		    , CPN_ISSU_YMD
@@ -249,4 +275,12 @@
 		ORDER BY 
 			MLG_YMD DESC
 	</select>
+	
+	<update id="updatePwd" parameterType="MberVO">
+		UPDATE TB_MBER
+		SET 
+			MBER_PW = #{newPw}
+		WHERE 
+			CST_NO = #{cstNo}
+	</update>
 </mapper>

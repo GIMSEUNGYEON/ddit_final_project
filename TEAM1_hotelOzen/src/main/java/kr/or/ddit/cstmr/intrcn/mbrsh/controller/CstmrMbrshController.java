@@ -68,6 +68,18 @@ public class CstmrMbrshController {
 		return "cstmr/intrcn/mbrsh/mbrshView";
 	}
 	
+	@GetMapping("{mbrGrdCd}/detail")
+	@ResponseBody
+	public Map<String, Object> mbrshDetailView(
+		@PathVariable String mbrGrdCd
+	){
+		log.info("mbrGrdCd : {}", mbrGrdCd);
+		MbrshGrdVO mbrsh = service.retrieveOneMbrsh(mbrGrdCd);
+		Map<String, Object> jsonData = new HashMap<>();
+		jsonData.put("mbrsh", mbrsh);
+		return jsonData;
+	}
+	
 	@GetMapping("subscribe/{mbsGrdCd}")
 	public String mbrshsubscribe(
 		@PathVariable String mbsGrdCd
