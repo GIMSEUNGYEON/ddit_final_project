@@ -41,4 +41,12 @@ public interface MberMapper{
 	
 	public List<MileageVO> selectMileageList(String cstNo);
 	
+	public int secsnUpdate(String cstNo);
+	
+	public int deletePrivacy();
+	
+	public int deletePrivacyCst();
+	
+	public int cancleSecsn(String username);
+	
 }

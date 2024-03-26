@@ -25,7 +25,6 @@ public class MberVO implements Serializable {
 	private String mberHomeTel;
 	private String mberAddr;
 	private boolean mberSecsnYn;
-	private boolean mberMbrshYn;
 	private String mberSbscrbYmd;
 	
 	private int mberMileage;

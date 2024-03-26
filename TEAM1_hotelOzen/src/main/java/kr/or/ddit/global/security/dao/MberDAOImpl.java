@@ -21,6 +21,10 @@ public class MberDAOImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MberVO mber = mapper.selectMberByUserName(username);
 		
+		if(mber.isMberSecsnYn()) {
+			mapper.cancleSecsn(username);
+		}
+		
 		return new MberVOWrapper(mber);
 	}
 

@@ -35,14 +35,14 @@ $("#submitForm").on("submit", (event) => {
 		}
 	}).then(jsonObj => {
 		for (let mber of jsonObj) {
-			if(mber['mberMbrshYn']){
+			if(mber.mbrsh[0].mbsGrdCd!=null){
 				mberList.add({
 					'cstNo':mber['cstNo'],
 					'cstNm':mber.cst['cstNm'],
 					'mberId':mber['mberId'],
 					'mberHp':mber.cst['cstHp'],
 					'mberMbrsh':mber.mbrsh[0]['mbsGrdCd'],
-					'detail':`<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cst-No="${mber['cstNo']}">test</button>`
+					'detail':`<button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cst-No="${mber['cstNo']}">detail</button>`
 				});					
 			}else{
 				mberList.add({
@@ -51,7 +51,7 @@ $("#submitForm").on("submit", (event) => {
 					'mberId':mber['mberId'],
 					'mberHp':mber.cst['cstHp'],
 					'mberMbrsh':'Non-subscriber',
-					'detail':`<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cst-No="${mber['cstNo']}">test</button>`
+					'detail':`<button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cst-No="${mber['cstNo']}">detail</button>`
 				});									
 			}
 		}
@@ -87,6 +87,10 @@ var fnRetrieveMber = (event) => {
 	let mberBtn = (event.relatedTarget);
 	let mberCstNo = (mberBtn.dataset.cstNo);
 
+	console.log(mberBtn)
+	console.log(mberCstNo)
+	console.log(`${baseURI}/${mberCstNo}`)
+	
 	fnCommFetch(`${baseURI}/${mberCstNo}`, {
 		headers: {
 			"Accept": "application/json"
@@ -96,6 +100,8 @@ var fnRetrieveMber = (event) => {
 		let mbrshList = jsonObj.mbrshList;
 		
 		console.log(mbrshList)
+		
+		console.log(mber);
 		
 		cstHp.value = mber.cst.cstHp
 		cstNm.value = mber.cst.cstNm

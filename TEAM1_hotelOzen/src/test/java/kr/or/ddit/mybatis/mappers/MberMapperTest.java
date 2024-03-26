@@ -33,7 +33,8 @@ class MberMapperTest extends AbstractRootContextTest {
 	
 	@Test
 	public void selectusernameTest() {
-		dao.selectMberByUserName("sujin06@hanmail.net");
+		MberVO mber = dao.selectMberByUserName("sujin06@hanmail.net");
+		log.info("{}", mber);
 	}
 	
 	@Test
@@ -72,5 +73,10 @@ class MberMapperTest extends AbstractRootContextTest {
 	void test4() {
 		MberVO mber = dao.selectCouponCnt("M2400039");
 		log.info("{}", mber);
+	}
+	
+	@Test
+	void test5() {
+		dao.deletePrivacy();
 	}
 }

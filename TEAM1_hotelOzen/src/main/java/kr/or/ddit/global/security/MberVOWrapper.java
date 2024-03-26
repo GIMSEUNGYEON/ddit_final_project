@@ -10,7 +10,7 @@ import kr.or.ddit.global.vo.MberVO;
 public class MberVOWrapper extends User {
 	
 	private MberVO mberUser;
-
+	
 	public MberVOWrapper(MberVO mberUser) {
 		super(mberUser.getMberId()
 				, mberUser.getMberPw()

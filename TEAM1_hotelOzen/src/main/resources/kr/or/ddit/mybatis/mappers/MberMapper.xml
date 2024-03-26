@@ -23,7 +23,6 @@
 		  , MBER_HOME_TEL
 		  , MBER_ADDR
 		  , MBER_SECSN_YN
-		  , MBER_MBRSH_YN
 		  , MBER_SBSCRB_YMD
 		  , MBER_SPCL_NOTE
 		  , MBER_MBTI
@@ -44,7 +43,8 @@
 		    TB_MBER
 		    INNER JOIN TB_CSTMR USING (CST_NO)
 		    LEFT OUTER JOIN TB_RSVT USING (CST_NO)
-		WHERE CST_NO = #{cstNo}	
+		WHERE 
+			CST_NO = #{cstNo}	
 	</select>
 	
 	<select id="selectByMberId" parameterType="string" resultMap="mberMap">
@@ -55,7 +55,6 @@
 		  , MBER_HOME_TEL
 		  , MBER_ADDR
 		  , MBER_SECSN_YN
-		  , MBER_MBRSH_YN
 		  , MBER_SBSCRB_YMD
 		  , MBER_SPCL_NOTE
 		  , MBER_MBTI
@@ -71,8 +70,9 @@
 		FROM
 		    TB_MBER
 		    INNER JOIN TB_CSTMR USING (CST_NO)
-		    LEFT OUTER JOIN TB_MBER_MBRSH USING (CST_NO)
-		WHERE MBER_ID = #{mberId}	
+		    LEFT OUTER JOIN TB_MBRSH_SETLE USING (CST_NO)
+		WHERE 
+			MBER_ID = #{mberId}
 	</select>
 	<resultMap type="MberVO" id="mberListMap" autoMapping="true">
 		<id property="cstNo" column="CST_NO"/>
@@ -86,17 +86,16 @@
 		    SELECT
 		        TB_MBER.CST_NO
 		        , TB_MBER.MBER_ID
-		        , TB_MBER.MBER_MBRSH_YN
 		        , TB_MBER.MBER_SBSCRB_YMD
 		        , TB_CSTMR.CST_NM
 		        , TB_CSTMR.CST_HP
-		        , TB_MBER_MBRSH.MBS_GRD_CD
-		        , TB_MBER_MBRSH.MBS_EXPRT_YMD
+		        , TB_MBRSH_SETLE.MBS_GRD_CD
+		        , TB_MBRSH_SETLE.MBS_EXPRT_YMD
 		    FROM
 		        TB_MBER
 		        INNER JOIN TB_CSTMR ON TB_MBER.CST_NO = TB_CSTMR.CST_NO
-		        LEFT OUTER JOIN TB_MBER_MBRSH ON (TB_MBER.CST_NO = TB_MBER_MBRSH.CST_NO)
-	            AND TB_MBER_MBRSH.MBS_EXPRT_YMD > SYSDATE
+		        LEFT OUTER JOIN TB_MBRSH_SETLE ON (TB_MBER.CST_NO = TB_MBRSH_SETLE.CST_NO)
+	            AND TB_MBRSH_SETLE.MBS_EXPRT_YMD > SYSDATE
 		    WHERE
 		        TB_MBER.MBER_SECSN_YN IS NULL
 		    ORDER BY
@@ -111,10 +110,11 @@
    </select>
    
 	<select id="selectMberByUserName" parameterType="string" resultMap="mberMap">
-		SELECT CST_NO, MBER_ID, MBER_PW, CST_NM, USER_ROLE
+		SELECT CST_NO, MBER_ID, MBER_PW, CST_NM, USER_ROLE, MBER_SECSN_YN
 		FROM TB_MBER
 			INNER JOIN TB_CSTMR USING (CST_NO)
-		WHERE MBER_ID = #{username}
+		WHERE 
+			MBER_ID = #{username}
 	</select>
 	
 	<select id="selectNewCstNo" resultType="string">
@@ -282,5 +282,42 @@
 			MBER_PW = #{newPw}
 		WHERE 
 			CST_NO = #{cstNo}
+	</update>
+	
+	<update id="secsnUpdate">
+		UPDATE TB_MBER
+		SET
+			MBER_SECSN_YN = 'Y'
+		WHERE 
+			CST_NO = #{cstNo}
+	</update>
+	
+	<update id="deletePrivacy">
+		UPDATE TB_MBER
+		SET
+			MBER_HOME_TEL = NULL
+			, MBER_ADDR = NULL
+			, MBER_MBTI = NULL
+		WHERE 
+			MBER_SECSN_YN = 'Y'
+	</update>
+	<update id="deletePrivacyCst">
+		UPDATE TB_CSTMR
+		SET
+			CST_NM = NULL
+			, CST_HP = NULL
+			, CST_BIRTH = NULL
+			, CST_GEN = NULL
+			, CST_MAIL = NULL
+		WHERE 
+			CST_NO = (SELECT CST_NO FROM TB_MBER WHERE 
+			MBER_SECSN_YN = 'Y')
+			AND CST_CLSFC_CD = 'N'	
+	</update>
+	<update id="cancleSecsn">
+		UPDATE TB_MBER
+		SET MBER_SECSN_YN = NULL
+		WHERE MBER_ID = #{username}
+			
 	</update>
 </mapper>

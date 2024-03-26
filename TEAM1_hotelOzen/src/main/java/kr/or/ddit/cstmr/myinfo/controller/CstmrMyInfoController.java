@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import kr.or.ddit.cstmr.auth.service.MberAuthService;
 import kr.or.ddit.cstmr.myinfo.service.CstmrMyInfoService;
@@ -25,6 +28,7 @@ import kr.or.ddit.cstmr.rsvt.service.CstmrRsvtRetrieveService;
 import kr.or.ddit.cstmr.scrap.service.MemScrapService;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.global.security.MberUser;
+import kr.or.ddit.global.security.MberVOWrapper;
 import kr.or.ddit.global.validate.UpdateGroup;
 import kr.or.ddit.global.vo.CstmrVO;
 import kr.or.ddit.global.vo.MberVO;
@@ -58,9 +62,6 @@ public class CstmrMyInfoController {
 	
 	@Inject
 	private ScrapMapper scrapDAO;
-	
-	@Inject
-	private MemScrapService scrapService;
 	
 	@Inject
 	MberAuthService authService;
@@ -211,7 +212,56 @@ public class CstmrMyInfoController {
 	public String secsn() {
 		return "cstmr/myinfo/mypage/secsn";
 	}
+	
+	@PostMapping("/checkPwd.do")
+	@ResponseBody
+	public Map<String, Object> checkPwd(
+		@RequestBody Map<String, String> jsonObj
+		, @MberUser MberVO mber
+	) {
+		Map<String, Object> jsonData = new HashMap<>();
+		
+		log.info("(jsonObj.get(\"currentPwd\")!= mber.getMberPw() = > {}, {}",jsonObj.get("currentPwd"), mber.getMberPw());
+		
+		if(jsonObj.get("currentPwd").equals(mber.getMberPw())) {
+			jsonData.put("message", "ok");			
+		}else {
+			jsonData.put("message", "error");
+		}
+		return jsonData;
+	}
+	
+	@GetMapping("/secsnCheck.do")
+	public String secsnCheck(
+		HttpSession session
+	) {
+		if(session.isNew()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found");
+		}
+		return "cstmr/myinfo/mypage/secsnCheck";
+	}
+	
+	
+	@PostMapping("/secsnCheck.do")
+	@ResponseBody
+	public Map<String, Object> secsnConfirm(
+		@MberUser MberVO mber
+	){
+		Map<String, Object> jsonData = new HashMap<>();
+		ServiceResult result = service.secsn(mber.getCstNo());
+		
+		switch (result) {
+		case OK:
+			jsonData.put("message", "ok");
+			break;
 
+		default:
+			jsonData.put("message", "error");
+			break;
+		}
+		return jsonData;
+	}
+	
 	@GetMapping("/mbrshSetle.do")
 	public String mbrshSetle(
 		Model model

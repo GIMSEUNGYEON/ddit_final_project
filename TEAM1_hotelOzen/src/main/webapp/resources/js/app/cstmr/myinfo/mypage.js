@@ -172,8 +172,6 @@ function pwChange(form){
 		jsonData[key] = value;
 	});
 	
-	console.log(jsonData)
-	
 	fetch(url, {
 		method:method,
 		headers:{
@@ -203,7 +201,6 @@ function pwChange(form){
 			newPwd.value = "";
 			newPwdChk.value = "";
 		}else if(jsonObj['message'].includes("error")){
-			console.log(jsonObj);
 			let errorMessage = jsonObj['errors']['newPw']
 			errorMessageField.innerHTML = errorMessage;
 		}else{
@@ -229,6 +226,89 @@ function mbrshSetle(){
 	});
 }
 
+$(document).on('click','.secsnBtn',function(event){
+	event.preventDefault();
+
+	let url = checkPwForm.action;
+	let method = checkPwForm.method;
+	let formData = new FormData(checkPwForm);
+	let jsonData = {}
+	formData.forEach((value, key)=>{
+		jsonData[key] = value;
+	});
+	
+	fetch(url,{
+		method:method,
+		headers:{
+			"Content-Type":"application/json",
+			"Accept":"application/json"			
+		},
+		body:JSON.stringify(jsonData)
+	}).then(resp=>{
+		if(resp.ok){
+			return resp.json();
+		}else{
+			throw new Error("오류 발생", {cause:resp})
+		}
+	}).then(jsonObj=>{
+		if(jsonObj['message'].includes("ok")){
+			secsnCheck();
+		}else{
+			Swal.fire({
+				title:'비밀번호가 일치하지 않습니다.',
+				icon:'error'
+			})
+		}
+	});
+	
+	return false;
+})
+
+$(document).on('click','#secsnConfirmBtn',function(event){
+	event.preventDefault();
+	
+	fetch(cPath+'/myinfo/secsnCheck.do',{
+		method:"post",
+		headers:{
+			"Content-Type":"application/json",
+			"Accept":"application/json"	
+		}
+	}).then(resp=>{
+		if(resp.ok){
+			return resp.json();
+		}else{
+			throw new Error("오류 발생", {cause:resp})
+		}
+	}).then(jsonObj=>{
+		if(jsonObj['message'].includes("ok")){
+			Swal.fire({
+				title:'탈퇴되었습니다.',
+				icon:'success',
+				confirmButtonText:"Home"
+			}).then((result)=>{
+				if(result.isConfirmed){
+					logoutForm.submit();
+				}
+			});
+		}else{
+			Swal.fire({
+				title:'서버에 에러가 발생했습니다. 다시 시도해주세요',
+				icon:'error'
+			})
+		}		
+	})
+	
+	return false;
+
+})
+
+function secsnCheck(){
+	fetch(cPath+'/myinfo/secsnCheck.do')
+		.then(resp=> resp.text())
+		.then(data=>{
+			content.innerHTML= data;
+	});	
+}
 
 function myscrapList(){
 	fetch(cPath+'/myinfo/myscrapList.do')
