@@ -5,8 +5,8 @@
 <!-- 비품시작 -->
 
 	<sql id="fxtrsSearchFrag">
-		<trim prefixOverrides="OR"> 
-			<trim>
+		<trim prefix="WHERE" prefixOverrides="AND"> 
+			<trim prefix="(" suffix=")" prefixOverrides="OR">
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.fxtrsSearchWord)">
 					OR RQST_NO LIKE '%${paging.simpleCondition.fxtrsSearchWord}%'
 				</if>
@@ -21,7 +21,7 @@
 				</if>
 			</trim>
 			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.fxtrsOneSearchWord)">
-				AND RQST_SE LIKE '%${paging.simpleCondition.fxtrsOneSearchWord}%'
+				AND RQST_SE = '${paging.simpleCondition.fxtrsOneSearchWord}'
 			</if>
 		</trim>
 	</sql>
@@ -73,20 +73,22 @@
 <!-- 연차시작  -->
 
 	<sql id="annualSearchFrag">
-		<trim  prefixOverrides="OR">
-			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
-				OR EMP_NO LIKE '%${paging.simpleCondition.annualSearchWord}%'
-			</if>
-			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
-				OR EMP_NM LIKE '%${paging.simpleCondition.annualSearchWord}%'
-			</if>
-			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
-				OR EMP_RQ_NM LIKE '%${paging.simpleCondition.annualSearchWord}%'
-			</if>
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<trim prefix="(" suffix=")" prefixOverrides="OR">
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
+					OR EMP_NO LIKE '%${paging.simpleCondition.annualSearchWord}%'
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
+					OR EMP_NM LIKE '%${paging.simpleCondition.annualSearchWord}%'
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualSearchWord)">
+					OR EMP_RQ_NM LIKE '%${paging.simpleCondition.annualSearchWord}%'
+				</if>
+			</trim>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualOneSearchWord)">
+					AND RQST_SE = '${paging.simpleCondition.annualOneSearchWord}'
+				</if>
 		</trim>
-			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.annualOneSearchWord)">
-				OR RQST_SE LIKE '%${paging.simpleCondition.annualOneSearchWord}%'
-			</if>
 	</sql>
 
 	<select id="annSelectList" parameterType="string" resultType="AnnualVO">

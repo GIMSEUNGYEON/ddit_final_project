@@ -30,8 +30,11 @@
 				, 'POS', '재무부'
 				, 'CRM', '고객 관리부'
 			) AS EMP_DEPT_NAME
-			
-			, EMP_JBGD
+			, DECODE(
+				EMP_JBGD
+				, 'STF', '직원'
+				, 'DPM', '부장'
+			) AS EMP_JBGD
 			, EMP_JNCMP_YMD
 			, EMP_HOME_TEL
 			, EMP_EML
@@ -41,6 +44,7 @@
 			, EMP_PROFL_UUID
 			, EMP_ANNUAL_LEAVE
 			, EMP_BIRTH
+			, EXTRACT (YEAR FROM SYSDATE) - EXTRACT (YEAR FROM TB_EMP.EMP_JNCMP_YMD) +1 AS EMP_CAREER
 		FROM TB_EMP
 		WHERE EMP_NO = #{empNo}
 	</select>

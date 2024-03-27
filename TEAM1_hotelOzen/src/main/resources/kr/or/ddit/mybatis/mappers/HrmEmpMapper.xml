@@ -86,12 +86,13 @@
 		  , USER_ROLE
 		FROM
 	    	TB_EMP
-	    WHERE EMP_RTRM_YN IS NULL
+<!-- 	    WHERE EMP_RTRM_YN IS NULL -->
 	    ORDER BY EMP_DEPT_NO, EMP_JBGD_NO
 	    ) A
-	    
-	
 </select>
+
+
+
 
 
 <resultMap type="HrmEmpVO" id="hrmEmpDclzMap" autoMapping="true">

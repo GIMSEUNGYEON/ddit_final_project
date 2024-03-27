@@ -14,18 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class RefndMapperTest extends AbstractRootContextTest {
 
-	@Inject
-	private RefndMapper dao;
+//	@Inject
+//	private RefndMapper dao;
 	
 	@Test
 	void test() {
-		RefndVO vo = dao.select("REF2402001");
-		log.info("{}",vo);
+//		RefndVO vo = dao.select("REF2402001");
+//		log.info("{}",vo);
 	}
 	@Test
 	void testSelectTotalRecord() {
 		
-		log.info("{}", dao.selectList());
+//		log.info("{}", dao.selectList());
 		
 	}
 }

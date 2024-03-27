@@ -158,6 +158,7 @@
 		    , FX_UNIT
 		    , FX_RQST_TOTALAMNT
 		    , RQST_RQ_YMD
+		    , EMP_PURCHS_NO
 		FROM 
 			TB_FXTRS_RQST
 			INNER JOIN TB_EMP USING (EMP_NO)
@@ -221,4 +222,49 @@
 		    , EMPSCHDL_SEQ.NEXTVAL
 		)
 	</insert>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_FXTRS_RQST
+	</select>
+	
+	<select id="selectrqstTotal" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_FXTRS_RQST
+		WHERE
+			RQST_SE = '요청대기'
+	</select>
+	
+	<select id="payTotal" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_FXTRS_RQST
+		WHERE
+			RQST_SE = '구매대기'
+	</select>
+	
+	<select id="payClearTotal" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_FXTRS_RQST
+		WHERE
+			RQST_SE = '구매완료'
+	</select>
+	
+	<update id="updateFxtrsPur" parameterType="FxtrsRqstVO">
+		UPDATE
+			TB_FXTRS_RQST
+		SET
+			RQST_SE = #{rqstSe}
+			, RQST_PURCHS_YMD = SYSDATE
+		WHERE
+			RQST_NO = #{rqstNo}
+	
+	</update>
 </mapper>

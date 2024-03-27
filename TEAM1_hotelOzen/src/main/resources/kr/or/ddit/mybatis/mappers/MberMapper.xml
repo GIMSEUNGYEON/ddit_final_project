@@ -316,7 +316,7 @@
 	</update>
 	<update id="cancleSecsn">
 		UPDATE TB_MBER
-		SET MBER_SECSN_YN = NULL
+		SE  MBER_SECSN_YN = NULL
 		WHERE MBER_ID = #{username}
 			
 	</update>

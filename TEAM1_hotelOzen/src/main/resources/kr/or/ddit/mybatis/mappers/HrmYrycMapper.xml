@@ -59,54 +59,66 @@
 	</select>
 
 	<sql id="searchFrag">
-		<trim prefix="WHERE" prefixOverrides="OR">
-	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
-	            OR RQST_NO LIKE '%${simpleCondition.searchWord}%'
-	        </if>
-	        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
-	            OR RQST_SE LIKE '%${simpleCondition.searchWord}%'
-	        </if>
+
+		<trim prefix="WHERE" prefixOverrides="AND"> 
+			<trim prefix="(" suffix=")" prefixOverrides="OR">
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+					OR C.EMP_NM LIKE '%${simpleCondition.searchWord}%'
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+					OR A.EMP_NO LIKE '%${simpleCondition.searchWord}%'
+				</if>
+			</trim>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.selectOneSearchWord)">
+				AND A.EMP_NO IN (SELECT EMP_NO FROM TB_EMP WHERE EMP_DEPT='${simpleCondition.selectOneSearchWord}')
+			</if>
 		</trim>
+
+
+
 	</sql>
 
 	<select id="selectTotalRecord">
 		SELECT COUNT(*)
 		FROM
-		TB_ANNUAL_LEAVE_USE
+		TB_ANNUAL_LEAVE_USE A
+			LEFT OUTER JOIN TB_ANNUAL_LEAVE_GIVE B ON (A.EMP_NO = B.EMP_NO)
+			LEFT OUTER JOIN TB_EMP C ON (A.EMP_NO = C.EMP_NO)
 		<include refid="searchFrag" />
 	</select>
 
 	<select id="selectList" resultType="HrmAnnualVO" parameterType="PaginationInfo">
 		WITH RNUMYRYC AS (	
 			SELECT 
-				ROWNUM RNUM, A.*
+				ROWNUM RNUM, FINAL.*
 			FROM (
 				SELECT 
 					A.ANL_LEA_USE_NO
 					, A.EMP_NO
 					, A.ANL_LEA_BGN_YMD
 					, A.ANL_LEA_END_YMD
-					, (A.ANL_LEA_END_YMD - A.ANL_LEA_BGN_YMD) AS USE_DATE
+					, (A.ANL_LEA_END_YMD - A.ANL_LEA_BGN_YMD)+1 AS USE_DATE
 					, A.ANL_LEA_RM
 					, A.ANL_LEA_INFO
 					, A.ANL_LEA_YMD
 					, A.EMP_RQ_NO
 					, A.RQST_SE
-					, RQST_PURCHS_YMD
+					, A.RQST_PURCHS_YMD
 					, B.ANL_LEA_GIVE_YMD
                     , B.ANL_LEA_GIVE_AMNT
-                    , (SELECT EMP_TEL FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_TEL
-                    , (SELECT EMP_DEPT FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_DEPT
-                    , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_NM
+                    , C.EMP_TEL
+                    , C.EMP_DEPT
+                    , C.EMP_NM
                     , (SELECT EMP_NM FROM TB_EMP WHERE EMP_NO = A.EMP_RQ_NO) AS EMP_RQ_NM
-                    , (SELECT EMP_ANNUAL_LEAVE FROM TB_EMP WHERE EMP_NO = A.EMP_NO) AS EMP_ANNUAL_LEAVE
+                    , C.EMP_ANNUAL_LEAVE
 				FROM
 					TB_ANNUAL_LEAVE_USE A
 						LEFT OUTER JOIN TB_ANNUAL_LEAVE_GIVE B ON (A.EMP_NO = B.EMP_NO)
+						LEFT OUTER JOIN TB_EMP C ON (A.EMP_NO = C.EMP_NO)
 				<include refid="searchFrag" />
 				ORDER BY 
-					ANL_LEA_USE_NO DESC
-			) A
+					A.ANL_LEA_USE_NO DESC
+			) FINAL
 		)
 		SELECT *
 		FROM RNUMYRYC

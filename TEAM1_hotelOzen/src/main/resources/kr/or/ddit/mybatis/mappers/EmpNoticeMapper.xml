@@ -223,7 +223,6 @@
 		EMP_NT_NM = #{empNtNm,jdbcType=VARCHAR}
 		, EMP_NT_CN = #{empNtCn,jdbcType=CLOB}
 		, EMP_NT_CLASSIFICATION = #{empNtClassification,jdbcType=VARCHAR}
-		, EMP_NT_CNT = #{empNtCnt,jdbcType=NUMERIC}
 		WHERE EMP_NT_NO = #{empNtNo}
 	</update>
 

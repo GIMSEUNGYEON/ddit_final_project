@@ -31,8 +31,7 @@
 				, FXTRS.*
 			FROM(
 				SELECT
-					PRCHS_NO
-					, EMP_NO
+					EMP_NO
 					, FX_CD
 					, PRCHS_FX_NM
 					, PRCHS_FX_CNT
@@ -44,8 +43,7 @@
 					TB_FXTRS_PRCHS_STTST
 				<include refid="searchFrag" />
 				GROUP BY
-					PRCHS_NO
-					, EMP_NO
+					EMP_NO
 					, FX_CD
 					, PRCHS_FX_NM
 					, PRCHS_FX_CNT
@@ -58,7 +56,6 @@
 		)
 		SELECT 
 			RNUM
-			, PRCHS_NO
 			, EMP_NO
 			, FX_CD
 			, PRCHS_FX_NM
@@ -73,4 +70,30 @@
 		]]>
 	</select>
 	
+	<insert id="insertFxtrsPrchsSttst" parameterType="FxtrsPrchsSttstVO">
+	INSERT ALL
+		<foreach collection="list" item="fxtrs">
+		INTO TB_FXTRS_PRCHS_STTST(
+		FX_CD
+		, EMP_NO
+		, PRCHS_FX_NM
+		, PRCHS_FX_CNT
+		, PRCHS_AMNT
+		, PRCHS_YMD
+		, PRCHS_SE
+		, RQST_NO
+	)VALUES(
+		 #{fxtrs.fxCd,jdbcType=VARCHAR}
+		, #{fxtrs.empNo,jdbcType=VARCHAR}
+		, #{fxtrs.prchsFxNm,jdbcType=VARCHAR}
+		, #{fxtrs.prchsFxCnt,jdbcType=NUMERIC}
+		, #{fxtrs.prchsAmnt,jdbcType=NUMERIC}
+		, SYSDATE
+		, 'Y'
+		, #{fxtrs.rqstNo,jdbcType=VARCHAR}
+	)
+	</foreach>
+	SELECT * 
+		FROM DUAL
+</insert>
 </mapper>
