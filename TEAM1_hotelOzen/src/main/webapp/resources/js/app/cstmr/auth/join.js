@@ -68,6 +68,21 @@ function checkMberId(){
 		}
 		console.log(message)
 		checkResult.innerHTML = message;
+		cstNm.value = "김승연";
+		cstGen.value = "F";
+		
+		mberPw.value = "1111aaaa!"
+		mberPwCheck.value = "1111aaaa!"
+		
+		cstMail.value = "faker0507"
+		
+		mailAddrSelect.value = "gmail.com"
+		mailAddr.value = "gmail.com"
+		
+		cstHp.value = "010-1996-0507"
+		
+		birYear.value = "1999"
+		birMon.value = "birMon"
 	})
 }
 

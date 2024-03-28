@@ -2,14 +2,13 @@ package kr.or.ddit.global.vo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(of="cpnNo")
-public class CouponIsnVO implements Serializable{
+public class CouponIsnVO implements Serializable {
 	
 	private String cpnNo;
 	
@@ -24,8 +23,6 @@ public class CouponIsnVO implements Serializable{
 	private String cpnAvailYn;
 	
 	private LocalDate cpnUseYmd;
-	
-	
 	
 	private CouponVO couponVO;
 	

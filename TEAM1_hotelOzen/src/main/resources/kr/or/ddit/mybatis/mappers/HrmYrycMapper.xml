@@ -59,7 +59,6 @@
 	</select>
 
 	<sql id="searchFrag">
-
 		<trim prefix="WHERE" prefixOverrides="AND"> 
 			<trim prefix="(" suffix=")" prefixOverrides="OR">
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
@@ -73,9 +72,6 @@
 				AND A.EMP_NO IN (SELECT EMP_NO FROM TB_EMP WHERE EMP_DEPT='${simpleCondition.selectOneSearchWord}')
 			</if>
 		</trim>
-
-
-
 	</sql>
 
 	<select id="selectTotalRecord">

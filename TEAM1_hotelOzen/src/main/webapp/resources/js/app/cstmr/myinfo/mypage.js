@@ -44,11 +44,10 @@ function updateForm(){
 			content.innerHTML= data;
 			let mbtiSelect = document.getElementsByName("mberMbti")[0];
 			let mbti = mbtiSelect.id;
-			console.log(mbti)
 			if(mbti!=null){
-				console.log(mbti, "222222")
-				console.log(document.getElementById(mbti))
 				mbtiSelect.value = mbti;
+			}else{
+				document.getElementById('MBTI').selected;
 			}
 			
 			mailAddrSelect.addEventListener("change", ()=>{

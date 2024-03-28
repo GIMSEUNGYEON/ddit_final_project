@@ -14,6 +14,28 @@
 
 </select>
 
+	<sql id="searchFrag">
+<!-- 			<trim prefix="(" suffix=")" prefixOverrides="OR"> -->
+<!-- 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.searchWord)"> -->
+<!-- 					OR TB_EMP.EMP_NM LIKE '%${paging.simpleCondition.searchWord}%' -->
+<!-- 				</if> -->
+<!-- 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.searchWord)"> -->
+<!-- 					OR EMP_JBGD LIKE '%${paging.simpleCondition.searchWord}%' -->
+<!-- 				</if> -->
+<!-- 			</trim> -->
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.searchWord)">
+					AND(
+						TB_EMP.EMP_NM LIKE '%${paging.simpleCondition.searchWord}%'
+						OR EMP_JBGD LIKE '%${paging.simpleCondition.searchWord}%'
+					)
+				</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(paging.simpleCondition.selectOneSearchWord)">
+				AND TB_EMP.EMP_DEPT='${paging.simpleCondition.selectOneSearchWord}'
+			</if>
+	</sql>
+
+
+
 
 
 <resultMap type="map" id="autoInQueryMap">
@@ -109,6 +131,7 @@
 			) PRE, (SELECT * FROM VW_WORK_TYPE_CD) WTC
 	) FINAL LEFT OUTER JOIN TB_EMP ON (FINAL.EMP_NO = TB_EMP.EMP_NO)
 	WHERE FINAL.MSLAY > 0 AND FINAL.MSLAY IS NOT NULL ]]>
+	<include refid="searchFrag" />
 	ORDER BY EMP_DEPT_NO ASC
 
 </select>

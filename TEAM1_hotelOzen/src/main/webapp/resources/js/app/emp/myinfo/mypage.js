@@ -46,6 +46,10 @@ $(searchForm).on("submit", function(event){
 						workTypeBadge=`
 							<span class="badge round-pill badge-subtle-primary"> OFF</span>
 						`
+					}else if(workTypeCd=='G'){
+						workTypeBadge=`
+							<span class="badge round-pill badge-subtle-secondary"> GENARAL</span>
+						`
 					}else{
 						workTypeBadge=`
 							<span class="badge round-pill badge-subtle-secondary"> OFF</span>

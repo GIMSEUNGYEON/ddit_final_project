@@ -43,7 +43,7 @@
 			<div class="mb-3">
 				<label class="label-font">* Name</label> 
 				<br>
-				<form:input class="input-phone wd-170 bor-none" type="text" path="cstNm"/>
+				<form:input class="input-phone wd-170 bor-none" type="text" id="cstNm" path="cstNm"/>
 				<form:errors path="cstNm" cssClass="text-danger"/>
 			</div>
 				
@@ -52,7 +52,7 @@
 				<br>
 				<form:select path="cstGen" class="bor-none  wd-170" id="cstGen" required="true">
 					<form:option value="" label="Gender"/>
-					<form:option value="F" label="Female" />
+					<form:option value="F" label="Female"/>
 					<form:option value="M" label="Male" />
 				</form:select>
 				<div class="mt-2" id="genCheckField" class="text-danger">
@@ -78,7 +78,7 @@
 			<div class="mt-4 mb-4">
 				<label class="label-font">* Email</label>
 				<br>
-				<form:input class="input-phone wd-170 bor-none" type="text" path="cstMail"/>
+				<form:input class="input-phone wd-170 bor-none" type="text" id="cstMail" path="cstMail"/>
 				<form:errors path="cstMail" cssClass="text-danger"/>
 				@
 				<form:input class="input-phone wd-170 bor-none" type="text" path="mailAddr" id="mailAddr"/>
@@ -86,7 +86,7 @@
 				<select id="mailAddrSelect"  class="bor-none wd-170 mx-2">
 					<option value="" label="직접 입력"/>
 					<option value="naver.com" label="naver.com"/>
-					<option value="google.com" label="google.com"/>
+					<option value="gmail.com" label="gmail.com"/>
 					<option value="daum.net" label="daum.net"/>
 					<option value="hanmail.net" label="hanmail.net"/>
 					<option value="hotmail.com" label="hotmail.com"/>
@@ -97,7 +97,7 @@
 			<div class="mb-4">
 				<label class="label-font">* Tel Number</label>
 				<br>
-				<form:input class="input-phone wd-450 bor-none" path="cstHp" type="text"/>
+				<form:input class="input-phone wd-450 bor-none" path="cstHp" id="cstHp" type="text"/>
 				<form:errors path="cstHp" cssClass="text-danger"/>
 			</div>
 				

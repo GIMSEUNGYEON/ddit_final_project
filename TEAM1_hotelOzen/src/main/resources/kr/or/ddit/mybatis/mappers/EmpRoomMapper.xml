@@ -9,7 +9,10 @@
 		            OR RM_NO LIKE '%${simpleCondition.searchWord}%'
 		        </if>
 		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
-		            OR RMT_TYPE_CD LIKE '%${simpleCondition.searchWord}%'
+		            OR RM_AVLBL_DETAILS LIKE '%${simpleCondition.searchWord}%'
+		        </if>
+		        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+		            OR RMT_NM_DETAILS LIKE '%${simpleCondition.searchWord}%'
 		        </if>
 		    </trim>
 		    <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.selectOneSearchWord)">
@@ -26,6 +29,7 @@
 		    COUNT(*)
 		FROM 
 		    TB_ROOM
+		    INNER JOIN TB_ROOM_TYPE USING (RMT_TYPE_CD)
 		<include refid="searchFrag" />
 	</select>
 	

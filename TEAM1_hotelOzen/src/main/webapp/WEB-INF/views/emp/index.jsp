@@ -69,7 +69,7 @@
 					취소</button>
 				<button type="button" class="btn btn-warning" id="saveChanges">
 					추가</button>
-			</div>
+			</div> 
 		</div>
 	</div>
 </div>
@@ -186,10 +186,25 @@
 			</div>
 		</div>
 		<div class="card_main short-main" style="margin-left: 20px;">
-			<div class="card h-75">
-				<div class="card-header text-center">업무현황</div>
-				<div class="card-body bg-light pb-0"></div>
-			</div>
+<div class="card h-75" id="approval">
+    <div class="card-header text-center">업무현황</div>
+		<div class="card-body bg-light pb-0">
+		    <div class="row justify-content-center mt-6">
+		        <div class="col-auto text-center">
+		            <span class="far fa-file-alt fs-4 d-block" style="height: 100px; width: 100px;"></span>
+		            <p>진행 중인 문서</p>
+		            <p>${proceeding }건</p>
+		        </div>
+		        <div class="col-auto text-center">
+		            <span class="fas fa-file-contract fs-4 d-block" style="height: 100px; width: 100px;"></span>
+		            <p>결재 예정 문서</p>
+		            <p>${waiting }건</p>
+		        </div>
+		    </div>
+		</div>
+
+</div>
+
 		</div>
 		<div class="card_main" style="margin-left: 20px; width: 50%">
 			<div class="card h-75">
@@ -273,6 +288,7 @@
 <!-- 근태div -->
 
 <script>
+const cPath = document.body.dataset.contextPath;
 
 $(function () {
 	// calendar element 취득
@@ -521,8 +537,8 @@ function captureAndSend() {
 				}
 				
 				jQuery.ajax({
-					url: "http://localhost:5000/cam_capture_upload.ajax",
-// 		        	url: "http://192.168.141.5:5000/cam_capture_upload.ajax",
+// 					url: "http://localhost:5000/cam_capture_upload.ajax",
+		        	url: "http://192.168.141.5:5000/cam_capture_upload.ajax",
 					processData: false,
 					contentType: false,
 					data: formData,
@@ -565,8 +581,8 @@ function checkDclz() {
 		formData.append('inTime', "${dclz.inTime}");
 		formData.append('outTime', "${dclz.outTime}");
 		jQuery.ajax({
-        	url: "http://localhost:5000/dclz.ajax",
-//         	url: "http://192.168.141.5:5000/dclz.ajax",
+//         	url: "http://localhost:5000/dclz.ajax",
+        	url: "http://192.168.141.5:5000/dclz.ajax",
 			processData: false,
 			contentType: false,
 			data: formData,
@@ -596,6 +612,14 @@ function checkDclz() {
 		});
 	}, 'image/jpeg', 0.9); 
 }
+
+$(document).ready(function() {
+    // 여기에 스크립트 코드 작성
+	$(document).on('click','#approval',function(event){
+		console.log(cPath)
+		window.location.href = cPath+'/emp/pbl/oprtnstts/oprtnsttsList.do'
+	});
+});
 </script>
 
 

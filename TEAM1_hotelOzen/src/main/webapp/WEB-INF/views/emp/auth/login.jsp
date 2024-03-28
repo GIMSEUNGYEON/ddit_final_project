@@ -41,7 +41,7 @@
 				<select name="login" class="select">
 				  <option selected value="" id="blankLogin">Login</option>
 				  <c:forEach items="${empList }" var="emp">
-				  	<option value="${emp.empNo }">${emp.empDept }</option>
+				  	<option value="${emp.empNo }">${emp.empDept } / ${emp.empJbgd }</option>
 				  </c:forEach>
 				</select>
                 <div class="position-relative mt-4">

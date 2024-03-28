@@ -43,7 +43,7 @@ public class MberAuthServiceImpl implements MberAuthService {
 			String cstMail = newMber.getCstMail();
 			String mailAddr = newMber.getMailAddr();
 
-			newMber.setCstMail(cstMail +"@"+ mailAddr);
+			newMber.setCstMail(cstMail.trim() +"@"+ mailAddr.trim());
 			
 			String cstNo = dao.selectNewCstNo();
 

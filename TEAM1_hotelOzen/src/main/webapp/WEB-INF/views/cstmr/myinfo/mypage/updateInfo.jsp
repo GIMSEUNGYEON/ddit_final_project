@@ -77,7 +77,7 @@ rel="stylesheet">
 				<select id="mailAddrSelect"  class="bor-none wd-170 mx-2">
 					<option value="" label="직접 입력"/>
 					<option value="naver.com" label="naver.com"/>
-					<option value="google.com" label="google.com"/>
+					<option value="gmail.com" label="gmail.com"/>
 					<option value="daum.net" label="daum.net"/>
 					<option value="hanmail.net" label="hanmail.net"/>
 					<option value="hotmail.com" label="hotmail.com"/>
@@ -92,7 +92,7 @@ rel="stylesheet">
 				<label class="label-font">Mbti</label>
 				<br>
 				<select name="mberMbti" class="bor-none wd-170" id="${user.mberMbti }">
-					<option value="" label="MBTI"/>
+					<option value="" label="MBTI" id="MBTI" selected/>
 					
 					<option value="ENFP" label="ENFP" id="ENFP"/>
 					<option value="ENFJ" label="ENFJ" id="ENFJ"/>

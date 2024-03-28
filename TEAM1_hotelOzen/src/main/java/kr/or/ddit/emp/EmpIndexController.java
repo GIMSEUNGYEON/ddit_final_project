@@ -2,6 +2,7 @@ package kr.or.ddit.emp;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -23,6 +24,7 @@ import kr.or.ddit.global.vo.EmpSchdlVO;
 import kr.or.ddit.global.vo.EmpVO;
 import kr.or.ddit.global.vo.HrmDclzVO;
 import kr.or.ddit.global.vo.HrmEmpVO;
+import kr.or.ddit.mybatis.mappers.EmpFxtrsRqstMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -38,6 +40,9 @@ public class EmpIndexController {
 	
 	@Inject
 	private HrmEmpNoticeSevice serviceNotice;
+	
+	@Inject
+	private EmpFxtrsRqstMapper rqstDao;
 
 //	@RequestMapping("/emp/index.do")
 //	public String index() {
@@ -78,7 +83,13 @@ public class EmpIndexController {
 		model.addAttribute("today", today);
 
 		List<EmpNoticeVO> empNoticeList = serviceNotice.retrieveEmpNoticeList(paging);
+		
 		model.addAttribute("empNoticeList",empNoticeList);  
+		
+		Map<String, Integer> rqstMap = rqstDao.selectRqst(empUser.getEmpNo());
+		
+		model.addAttribute("proceeding", rqstMap.get("PROCEEDING"));
+		model.addAttribute("waiting", rqstMap.get("WAITING"));
 		
 		return "emp/index";
 	}

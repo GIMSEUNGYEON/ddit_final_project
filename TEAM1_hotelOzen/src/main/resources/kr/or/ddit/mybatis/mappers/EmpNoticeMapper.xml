@@ -191,7 +191,7 @@
 				INNER JOIN TB_EMP USING(EMP_NO)
 				LEFT OUTER JOIN TB_ATCHMNFL_EMP_NOTICE USING(EMP_NT_NO)
 				<include refid="searchFrag" />
-				ORDER BY EMP_NT_YMD DESC
+				ORDER BY EMP_NT_YMD ASC
 			) A
 		) B
 		<where>

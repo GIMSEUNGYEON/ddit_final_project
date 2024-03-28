@@ -2,6 +2,8 @@ package kr.or.ddit.mybatis.mappers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,12 @@ class EmpFxtrsRqstMapperTest extends AbstractRootContextTest{
 	void testSelectEmpName() {
 		String empNo = "E150001";
 		log.info("{}", dao.selectEmpName(empNo));
+	}
+	
+	@Test
+	void test3() {
+		Map<String, Integer> map = dao.selectRqst("E120001");
+		log.info("{}", map);
 	}
 
 }

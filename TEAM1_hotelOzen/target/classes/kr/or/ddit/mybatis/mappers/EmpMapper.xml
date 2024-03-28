@@ -114,9 +114,18 @@
 		SELECT 
 			EMP_NO
 			, EMP_DEPT
+			, EMP_JBGD
 		FROM TB_EMP 
 		WHERE 
 		    EMP_DEPT IN ('FMT', 'FTO', 'HRM', 'POS', 'CRM', 'HKP') 
 		    AND EMP_JBGD = 'DPM'
+		UNION
+		SELECT 
+			EMP_NO
+			, EMP_DEPT
+			, EMP_JBGD
+		FROM TB_EMP
+		WHERE
+			EMP_NO = 'E230014'
 	</select>
 </mapper>
